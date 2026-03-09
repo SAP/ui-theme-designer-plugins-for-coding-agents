@@ -1,0 +1,3 @@
+[submodule "skills/sap-theming/references/btp-ui-theme-designer"]
+	path = skills/sap-theming/references/btp-ui-theme-designer
+	url = https://github.com/SAP-docs/btp-ui-theme-designer.git
