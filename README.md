@@ -31,6 +31,8 @@ git submodule update --init
 This is mainly a static SKILL.md with a reference of the production UI Theme Designer CF help documentation, and a dynamically built index of that documentation (for faster lookup by agents). To rebuild the index, run
 
 ```sh
-./scripts/build.sh
+node scripts/build.mjs
 ```
+
+You have to be logged in to a CF space where an instance of SAP AI Core Service with the sap-internal plan, named `theming-ai-core`, is available.
 
