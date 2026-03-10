@@ -37,6 +37,20 @@
         {"description": "Identifies likely fallback result", "check": "Response identifies that the theme likely fell back to a Horizon variant (sap_horizon_hcb) or another HCB theme via the flavor fallback"},
         {"description": "Recommends migration to Horizon", "check": "Response recommends migrating the custom theme to be based on a Horizon or Quartz theme as the fix"}
       ]
+    },
+    {
+      "id": 4,
+      "prompt": "I'm building a custom tile component for our SAP Fiori app. Generate the CSS classes for the tile using SAP theming parameters so it looks consistent with the standard SAP Fiori tiles. The tile has a default state, hover state, active state, a title, and a subtitle. It should also have a border and rounded corners.",
+      "expected_output": "Generates CSS using var(--sapTile_*) CSS custom properties for background, border, border-radius, text colors, hover, and active states. Uses real SAP parameter names (not invented ones). Does NOT use hardcoded fallback values in var() — uses bare var(--sapXxx) instead. Uses rem for dimensions. Mentions the Parameter Explorer or parameter dependencies doc as a way to look up additional parameters. Mentions that the developer must ensure SAP theme CSS custom properties are available at runtime.",
+      "files": [],
+      "assertions": [
+        {"description": "Uses --sapTile_Background CSS custom property", "check": "Response uses var(--sapTile_Background) for the tile background color"},
+        {"description": "Uses --sapTile_BorderColor CSS custom property", "check": "Response uses var(--sapTile_BorderColor) for the tile border color"},
+        {"description": "Covers hover and active states with correct parameters", "check": "Response includes hover state using --sapTile_Hover_Background and/or active state using --sapTile_Active_Background"},
+        {"description": "Does NOT use hardcoded fallback values in var()", "check": "Response uses bare var(--sapXxx) without hardcoded fallback values (NOT var(--sapXxx, #fff) or similar). It may mention that the developer must ensure the theme CSS is loaded instead."},
+        {"description": "Uses rem for dimensions", "check": "Response uses rem units (not px) for dimension values like border-radius, padding, font-size, or spacing"},
+        {"description": "References Parameter Explorer or parameter dependencies doc", "check": "Response mentions the Parameter Explorer (sap.github.io/theming-base-content) or the parameter dependencies documentation as a resource for looking up additional parameters"}
+      ]
     }
   ]
 }
