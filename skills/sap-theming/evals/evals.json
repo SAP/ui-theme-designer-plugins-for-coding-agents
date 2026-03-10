@@ -95,6 +95,39 @@
         {"description": "Explains Accept vs Success distinction", "check": "Response explicitly explains the difference between Accept (action: confirming/accepting) and Success (state: positive feedback) in SAP button semantics"},
         {"description": "Explains Warning vs Critical follows the same pattern", "check": "Response explains that Warning (action) vs Critical (state) follows the same action/state distinction as Accept/Success and Reject/Negative"}
       ]
+    },
+    {
+      "id": 8,
+      "prompt": "Please migrate this card component CSS to SAP theming parameters so it works with dark mode and high contrast. The file is at evals/card_premigration.css.",
+      "expected_output": "Migrated CSS replacing hardcoded values with var(--sapTile_*) and generic SAP parameters. SAP uses sapTile_* for both tiles and cards (no sapCard_* family). Uses sapContent_Shadow* for box-shadow. Uses sapContent_DisabledOpacity for disabled. Removes or annotates the :root block. Lists unmatched and unused properties.",
+      "files": ["evals/card_premigration.css"],
+      "assertions": [
+        {"description": "Uses sapTile_Background for card background", "check": "Response uses var(--sapTile_Background) for the card background color (SAP uses sapTile_* for both tiles and cards — there is no sapCard_* family)"},
+        {"description": "Uses sapTile_BorderColor for card border", "check": "Response uses var(--sapTile_BorderColor) for the card border color"},
+        {"description": "Uses sapContent_Shadow* for box-shadow", "check": "Response uses var(--sapContent_Shadow0) or var(--sapContent_Shadow1) or another sapContent_Shadow* parameter for the card box-shadow instead of the hardcoded rgba shadow"},
+        {"description": "Uses sapTile_SeparatorColor for header/footer borders", "check": "Response uses var(--sapTile_SeparatorColor) for the internal header/footer border colors"},
+        {"description": "Uses sapFontFamily for font-family", "check": "Response uses var(--sapFontFamily) or var(--sapFontHeaderFamily) instead of the hardcoded 'Segoe UI' font stack"},
+        {"description": "Removes or annotates the legacy :root block", "check": "Response removes the :root block with legacy custom properties or adds a comment explaining that SAP theming provides these values"},
+        {"description": "Uses bare var() without hardcoded fallback values", "check": "Response uses bare var(--sapXxx) without hardcoded fallback values"},
+        {"description": "Uses sapContent_DisabledOpacity for disabled card", "check": "Response uses var(--sapContent_DisabledOpacity) for the .card.disabled opacity instead of the hardcoded 0.5"}
+      ]
+    },
+    {
+      "id": 9,
+      "prompt": "I have a form field CSS file with input styles, value states (error, warning, success), disabled and read-only states. Migrate it to use SAP theming parameters. The file is at evals/field_premigration.css.",
+      "expected_output": "Migrated CSS replacing hardcoded values with var(--sapField_*) and generic SAP parameters. Maps value states to sapField_Error_*, sapField_Warning_*, sapField_Success_*. Uses sapContent_DisabledOpacity and sapContent_FocusColor. Removes or annotates the :root block.",
+      "files": ["evals/field_premigration.css"],
+      "assertions": [
+        {"description": "Uses sapField_Background for field background", "check": "Response uses var(--sapField_Background) for the base input field background color"},
+        {"description": "Uses sapField_BorderColor for field border", "check": "Response uses var(--sapField_BorderColor) for the base input field border color"},
+        {"description": "Maps .is-error to sapField error parameters", "check": "Response maps .is-error to sapField error parameters like var(--sapField_InvalidColor) or var(--sapField_InvalidBackground) or similar sapField_* error parameters"},
+        {"description": "Maps .is-warning to sapField warning parameters", "check": "Response maps .is-warning to sapField warning parameters like var(--sapField_WarningColor) or var(--sapField_WarningBackground) or similar sapField_* warning parameters"},
+        {"description": "Maps .is-success to sapField success parameters", "check": "Response maps .is-success to sapField success parameters like var(--sapField_SuccessColor) or var(--sapField_SuccessBackground) or similar sapField_* success parameters"},
+        {"description": "Uses sapContent_DisabledOpacity for disabled field", "check": "Response uses var(--sapContent_DisabledOpacity) for the disabled state opacity instead of the hardcoded 0.6"},
+        {"description": "Uses sapFontFamily for font-family", "check": "Response uses var(--sapFontFamily) instead of the hardcoded 'Arial' font"},
+        {"description": "Removes or annotates the legacy :root block", "check": "Response removes the :root block with legacy custom properties or adds a comment explaining that SAP theming provides these values"},
+        {"description": "Uses sapField_Hover_BorderColor for hover state", "check": "Response uses var(--sapField_Hover_BorderColor) or similar hover parameter for the field hover state border color"}
+      ]
     }
   ]
 }
