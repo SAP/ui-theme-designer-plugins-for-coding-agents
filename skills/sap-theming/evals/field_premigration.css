@@ -1,0 +1,138 @@
+/* Form field styles — legacy design system */
+
+:root {
+	--field-bg: #FFFFFF;
+	--field-border: #AAAAAA;
+	--field-focus-color: #0070D2;
+	--field-placeholder: #999999;
+	--field-label: #555555;
+	--field-error: #CC0000;
+	--field-warning: #E87600;
+	--field-success: #2B7D2B;
+}
+
+/* Base Input Field */
+.form-field {
+  background-color: var(--field-bg);
+  border: 1px solid var(--field-border);
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  font-family: "Arial", sans-serif;
+  font-size: 0.875rem;
+  color: #333333;
+  line-height: 1.5;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.15s ease-in-out;
+}
+
+.form-field::placeholder {
+  color: var(--field-placeholder);
+}
+
+/* Field Focus */
+.form-field:focus {
+  border-color: var(--field-focus-color);
+  box-shadow: 0 0 0 2px rgba(0, 112, 210, 0.2);
+}
+
+/* Field Hover */
+.form-field:hover:not(:focus):not(:disabled) {
+  border-color: #777777;
+}
+
+/* Field Disabled */
+.form-field:disabled {
+  background-color: #F5F5F5;
+  color: #AAAAAA;
+  border-color: #DDDDDD;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Field Read-Only */
+.form-field[readonly] {
+  background-color: #FAFAFA;
+  border-color: #E0E0E0;
+  cursor: default;
+}
+
+/* Error State */
+.form-field.is-error {
+  border-color: var(--field-error);
+  background-color: #FFF0F0;
+}
+
+.form-field.is-error:focus {
+  box-shadow: 0 0 0 2px rgba(204, 0, 0, 0.2);
+}
+
+/* Warning State */
+.form-field.is-warning {
+  border-color: var(--field-warning);
+  background-color: #FFF8EE;
+}
+
+.form-field.is-warning:focus {
+  box-shadow: 0 0 0 2px rgba(232, 118, 0, 0.2);
+}
+
+/* Success State */
+.form-field.is-success {
+  border-color: var(--field-success);
+  background-color: #F0FFF0;
+}
+
+.form-field.is-success:focus {
+  box-shadow: 0 0 0 2px rgba(43, 125, 43, 0.2);
+}
+
+/* Field Label */
+.form-label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--field-label);
+}
+
+.form-label.required::after {
+  content: " *";
+  color: var(--field-error);
+}
+
+/* Help Text */
+.form-help {
+  font-size: 0.75rem;
+  color: #777777;
+  margin-top: 0.25rem;
+}
+
+.form-help.is-error {
+  color: var(--field-error);
+}
+
+.form-help.is-warning {
+  color: var(--field-warning);
+}
+
+/* Field Group (label + input + help) */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+/* Select / Dropdown */
+.form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,...");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2.5rem;
+}
+
+/* Textarea */
+.form-textarea {
+  min-height: 5rem;
+  resize: vertical;
+}

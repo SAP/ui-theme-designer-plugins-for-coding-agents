@@ -1,0 +1,91 @@
+/* Card component styles — legacy design system */
+
+:root {
+	--card-bg: #FFFFFF;
+	--card-border: #E0E0E0;
+	--card-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+	--card-header-border: #F0F0F0;
+	--card-radius: 8px;
+}
+
+/* Base Card */
+.card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  font-family: "Segoe UI", "Arial", sans-serif;
+  color: #333333;
+}
+
+/* Card Header */
+.card-header {
+  padding: 1rem 1rem 0.75rem;
+  border-bottom: 1px solid var(--card-header-border);
+}
+
+.card-header .card-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1A1A1A;
+  margin: 0 0 0.25rem;
+  font-family: "Segoe UI Semibold", "Segoe UI", sans-serif;
+}
+
+.card-header .card-subtitle {
+  font-size: 0.875rem;
+  color: #666666;
+  margin: 0;
+}
+
+/* Card Body */
+.card-body {
+  padding: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #333333;
+}
+
+/* Card Footer */
+.card-footer {
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--card-header-border);
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+/* Card Hover */
+.card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  border-color: #CCCCCC;
+}
+
+/* Card Selected */
+.card.selected {
+  border-color: #0070D2;
+  box-shadow: 0 0 0 2px rgba(0, 112, 210, 0.25);
+}
+
+/* Card Disabled */
+.card.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Card Sizes */
+.card-sm {
+  max-width: 18rem;
+}
+
+.card-lg {
+  max-width: 36rem;
+}
+
+/* Card Grid */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  gap: 1rem;
+}
