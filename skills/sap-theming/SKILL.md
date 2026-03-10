@@ -1,6 +1,6 @@
 ---
 name: sap-theming
-description: SAP theming expert for UI Theme Designer on BTP Cloud Foundry. Covers integrating custom themes in SAPUI5 applications (bootstrap config, theme root, URL parameters, theme origin allowlist, versionedLibCss, theme sets), working with theming parameters (LESS variables, CSS custom properties, palette parameters, parameter hierarchy, custom CSS, custom fonts), writing component CSS using SAP theming parameters (listing parameters per component, generating theme-aware CSS classes with design tokens like sapTile_Background, sapButton_BorderColor, etc.), theme fallback behavior, and theming content structure. Use this skill whenever the user mentions SAP themes, UI Theme Designer, sap-theme, theme root, theming parameters, sapBrandColor, sapTile, sapButton, sapList, sapCard, component CSS, CSS custom properties for SAP controls, design tokens in SAP, custom CSS in themes, palette parameters, theme sets, theme fallback, LESS theming, theming content, theming-base-content, or asks about applying corporate branding to SAP applications, writing theme-aware CSS for UI components, generating CSS classes for SAP controls, or listing theming parameters for a component — even if they don't explicitly name the UI Theme Designer.
+description: SAP theming expert for UI Theme Designer on BTP Cloud Foundry. Covers integrating custom themes in SAPUI5 applications (bootstrap config, theme root, URL parameters, theme origin allowlist, versionedLibCss, theme sets), working with theming parameters (LESS variables, CSS custom properties, palette parameters, parameter hierarchy, custom CSS, custom fonts), writing component CSS using SAP theming parameters (listing parameters per component, generating theme-aware CSS classes with design tokens like sapTile_Background, sapButton_BorderColor, etc.), migrating existing CSS to SAP design system parameters (replacing hardcoded CSS values with theming tokens, mapping legacy design system properties to SAP equivalents, identifying unmatched properties), theme fallback behavior, and theming content structure. Use this skill whenever the user mentions SAP themes, UI Theme Designer, sap-theme, theme root, theming parameters, sapBrandColor, sapTile, sapButton, sapList, sapCard, component CSS, CSS custom properties for SAP controls, design tokens in SAP, custom CSS in themes, palette parameters, theme sets, theme fallback, LESS theming, theming content, theming-base-content, or asks about applying corporate branding to SAP applications, writing theme-aware CSS for UI components, generating CSS classes for SAP controls, listing theming parameters for a component, migrating CSS to SAP design tokens, replacing hardcoded colors with theming variables, or mapping legacy design system properties to SAP equivalents — even if they don't explicitly name the UI Theme Designer.
 ---
 
 # SAP Theming
@@ -10,6 +10,7 @@ This skill provides developer-focused guidance on SAP theming using the UI Theme
 1. **Theme integration** — applying custom themes to SAPUI5 applications and other SAP products
 2. **Theming parameters** — working with LESS/CSS parameters, custom CSS, palette parameters, and the parameter hierarchy
 3. **Component CSS** — writing theme-aware CSS for UI components using SAP theming parameters as CSS custom properties
+4. **CSS migration** — migrating existing CSS with hardcoded values or legacy design system properties to SAP theming parameters
 
 ## Using the reference documentation
 
@@ -268,6 +269,96 @@ Key guidelines for generating component CSS:
 - **Look up the actual parameters**: before generating CSS, consult the parameter dependencies doc (`Advanced-Information/theme-parameter-dependencies-18d80b4.md`) to find the correct, real parameter names for the requested component. Don't guess parameter names — verify them against the reference.
 
 
+## Migrating existing CSS to SAP theming parameters
+
+When developers have existing CSS with hardcoded color values or legacy design system custom properties, they can migrate it to use SAP theming parameters. This makes the CSS theme-aware — it automatically adapts when users switch to dark mode, high-contrast themes, or apply corporate branding.
+
+### Migration philosophy: component-first, not property-by-property
+
+The wrong approach to migration is replacing individual CSS properties one-by-one with their SAP equivalents. This produces incomplete, broken results — you'll get `sapButton_Emphasized_Background` but miss `sapButton_Emphasized_FontFamily`, `sapButton_Emphasized_TextShadow`, and the state-specific parameters for hover/active.
+
+The right approach is **component-first**: identify which SAP component is being styled (e.g. "this is an emphasized button"), look up *all* parameters for that component, and produce CSS that uses the complete parameter set — even parameters that have no counterpart in the original CSS. The original CSS was designed for one static theme; the migrated CSS needs to work across all SAP themes, which means it needs more parameters than the original had properties.
+
+**Don't preserve hardcoded `transparent`.** Legacy CSS often uses `background-color: transparent` for ghost/secondary buttons. In the SAP design system, even "transparent" backgrounds come from the parameter (e.g. `sapButton_Background` or `sapButton_Lite_Background`) — the theme decides the actual value. Replace `transparent` with the correct SAP parameter just like any other hardcoded value.
+
+### Migration workflow
+
+1. **Identify the component and variant** — determine which SAP component parameter family applies based on class names and visual intent (e.g. `.btn-primary` → `sapButton_Emphasized_`, `.card` → `sapCard_`).
+2. **Look up the full parameter set** — consult the parameter dependencies doc (`Advanced-Information/theme-parameter-dependencies-18d80b4.md`) for *all* parameters in that variant's family, including state-specific ones (Hover, Active). Also include generic parameters (see below).
+3. **Write complete variant CSS** — don't just substitute the existing properties 1:1. Write the CSS for each variant from scratch using the full parameter set. If the original had only `background-color` and `color`, but the SAP variant also has `font-family`, `text-shadow`, and `border-width` parameters, include them all. Remove `:root` blocks that defined legacy custom properties (add a comment noting SAP theming infrastructure provides these values). Follow the same guidelines as for generating new component CSS: bare `var()` without fallback values, `rem` for dimensions.
+4. **Report** — produce four deliverables: migrated CSS, mapping comments, unmatched legacy properties, unused SAP parameters.
+
+### Semantic mapping guide
+
+The hardest part of migration is mapping CSS class variants to the correct SAP parameter family. SAP uses *action* semantics (Accept, Reject) separately from *state* semantics (Success, Negative, Critical). Most CSS frameworks use state semantics for their button variants, so the mapping requires care.
+
+| CSS class pattern | SAP parameter family | Semantic meaning |
+|---|---|---|
+| `.btn`, `.button` (default) | `sapButton_` | Base/default button |
+| `.btn-primary`, `.button-primary`, CTA | `sapButton_Emphasized_` | Primary call-to-action |
+| `.btn-success`, `.btn-positive` | `sapButton_Success_` | Success state (positive feedback) |
+| `.btn-danger`, `.btn-error`, `.btn-destructive` | `sapButton_Negative_` | Error/destructive state |
+| `.btn-warning`, `.btn-caution` | `sapButton_Critical_` | Warning/caution state |
+| `.btn-info`, `.btn-information` | `sapButton_Information_` | Informational state |
+| `.btn-secondary`, `.btn-ghost` | `sapButton_` | Secondary/ghost variant of the base button |
+| `.btn-link`, `.btn-transparent` | `sapButton_Lite_` | Transparent/text-only style |
+| `.btn-accept`, `.btn-confirm` | `sapButton_Accept_` | Action: user confirms/accepts |
+| `.btn-reject`, `.btn-decline` | `sapButton_Reject_` | Action: user rejects/declines |
+
+**Accept vs Success — these are different things.** SAP separates *action* semantics (what the user does) from *state* semantics (what the button conveys). This distinction applies across three pairs:
+
+The same pattern applies to all three pairs:
+
+- **Accept** (action: "I confirm") vs **Success** (state: positive feedback) — `.btn-success` → `sapButton_Success_*`
+- **Reject** (action: "I decline") vs **Negative** (state: error/destructive) — `.btn-danger` → `sapButton_Negative_*`
+- **Warning** (action: "proceed with caution") vs **Critical** (state: caution/warning feedback) — `.btn-warning` → `sapButton_Critical_*`
+
+CSS classes named after states (`.btn-success`, `.btn-danger`, `.btn-warning`) almost always mean the state semantic, so map them to Success, Negative, and Critical respectively. Only use the action semantics (Accept, Reject, Warning) when the button's purpose is explicitly about a user action.
+
+### Variant-specific state parameters
+
+Each button variant has its own Hover and Active parameters. When migrating hover/active states, always use the variant-specific parameter — never fall back to the base parameter. For example:
+
+- Emphasized hover: `sapButton_Emphasized_Hover_Background`, `sapButton_Emphasized_Hover_BorderColor`, `sapButton_Emphasized_Hover_TextColor` — not `sapButton_Hover_Background`
+- Lite active: `sapButton_Lite_Active_Background`, `sapButton_Lite_Active_BorderColor`, `sapButton_Lite_Active_TextColor` — not `sapButton_Active_Background`
+
+This applies to all variants: Emphasized, Success, Negative, Critical, Accept, Reject, Lite, Information, Neutral. Each has `_Hover_` and `_Active_` sub-families. Using the base `sapButton_Hover_*` for a variant will produce the wrong colors.
+
+### Generic parameters for interactive components
+
+Every interactive component should use these generic parameters even though they don't contain the component name. They're easy to overlook during migration because a naive search for "sapButton" won't find them:
+
+- **Focus**: `sapContent_FocusColor`, `sapContent_FocusWidth`, `sapContent_FocusStyle` — use for `:focus` / `:focus-visible` outlines
+- **Disabled**: `sapContent_DisabledOpacity` — use for `:disabled` opacity instead of hardcoded values like `0.4` or `0.5`
+- **Fonts**: `sapFontFamily`, `sapFontSize`, `sapFontHeaderFamily` — replace hardcoded font stacks and sizes
+- **Shadows**: `sapContent_Shadow0` through `sapContent_Shadow3` — replace hardcoded box-shadow values
+
+When migrating, check whether the existing CSS has focus styles, disabled states, font declarations, or shadows — if so, replace the hardcoded values with these generic parameters.
+
+### Four deliverables
+
+When migrating CSS, produce these four outputs:
+
+1. **Migrated CSS** — the complete CSS file with all replaceable values substituted with `var(--sapXxx)`. Remove `:root` blocks that defined legacy custom properties, adding a comment like `/* SAP Design System tokens replace these custom properties. Remove this :root block — SAP's theming infrastructure provides the values. */`. Preserve structural CSS (layout, sizing, display) that has no SAP parameter equivalent.
+
+2. **Mapping comments** — add a CSS comment above each variant section noting the semantic mapping, e.g. `/* Success Button → SAP Success */` or `/* Primary Button → SAP Emphasized */`.
+
+3. **Unmatched legacy properties** — list legacy custom properties that have no SAP equivalent, with a short explanation of what they controlled:
+   ```
+   Unmatched legacy properties (no SAP equivalent):
+   - --button-border-style: controls border style (solid/dashed) — no SAP parameter for this
+   ```
+
+4. **Unused SAP parameters** — summarize SAP parameter families relevant to the component that are NOT used in the migrated CSS, so the developer can decide whether to add them. **Summarize by family** rather than listing every individual parameter — some component namespaces (especially charts) have hundreds of parameters, and listing them all is overwhelming and useless. For example:
+   ```
+   Unused SAP button families (consider adding):
+   - sapButton_Accept_* / sapButton_Reject_*: for accept/reject action buttons
+   - sapButton_Information_*: for informational state buttons
+   - sapButton_Neutral_*: for neutral state buttons
+   - sapButton_IconColor: icon color inside buttons
+   ```
+
+
 ## Supported SAP themes
 
 | Theme | Technical ID |
@@ -316,3 +407,6 @@ When helping users, watch out for these frequent issues:
 - **Hardcoded colors in component CSS** — when generating CSS for components, always use theming parameters via `var(--sapXxx)` instead of hardcoded hex values. Hardcoded colors break theme switching and accessibility (especially dark mode and high-contrast themes).
 - **`var()` fallback values** — do not use `var(--sapTile_Background, #fff)` with hardcoded fallback values. Fallback values only work for a single theme and break when switching to dark mode or high-contrast. Instead, ensure the SAP theme CSS is loaded at runtime.
 - **Guessing parameter names** — parameter names must be looked up, not guessed. The naming convention helps, but the actual set of parameters varies per component. Always verify against the parameter dependencies doc or the Parameter Explorer.
+- **Accept vs Success confusion** — `sapButton_Accept_*` is for action buttons (confirming/accepting), not success-state buttons. Map `.btn-success` to `sapButton_Success_*`, not `sapButton_Accept_*`. The same applies to Reject/Negative and Warning/Critical: `.btn-danger` → `sapButton_Negative_*` (not Reject), `.btn-warning` → `sapButton_Critical_*` (not Warning or Attention).
+- **Missing generic parameters in migration** — `sapContent_DisabledOpacity`, `sapContent_FocusColor`, and other `sapContent_*` parameters apply to all interactive components but are easy to overlook because they don't contain the component name. Always check for focus, disabled, and shadow styles during migration.
+- **Preserving `transparent` instead of using the SAP parameter** — legacy ghost/secondary buttons often use `background-color: transparent`. In the SAP design system, the background comes from the parameter (`sapButton_Background`, `sapButton_Lite_Background`). Replace `transparent` just like any other hardcoded value.
