@@ -51,6 +51,50 @@
         {"description": "Uses rem for dimensions", "check": "Response uses rem units (not px) for dimension values like border-radius, padding, font-size, or spacing"},
         {"description": "References Parameter Explorer or parameter dependencies doc", "check": "Response mentions the Parameter Explorer (sap.github.io/theming-base-content) or the parameter dependencies documentation as a resource for looking up additional parameters"}
       ]
+    },
+    {
+      "id": 5,
+      "prompt": "I have a button component CSS file that uses hardcoded colors and our old design system's custom properties. Please migrate it to use SAP's design system CSS custom properties so it works with SAP theming (dark mode, high contrast, corporate branding). The file is at evals/button_premigration.css.",
+      "expected_output": "Migrated CSS replacing hardcoded values and legacy custom properties with var(--sapButton_*) and generic SAP parameters. Maps .btn-success to sapButton_Success_* (not Accept). Uses sapContent_DisabledOpacity for disabled opacity. Uses sapContent_FocusColor/FocusWidth/FocusStyle for focus outlines. Removes or annotates the :root block. Lists unmatched and unused properties.",
+      "files": ["evals/button_premigration.css"],
+      "assertions": [
+        {"description": "Maps .btn-success to sapButton_Success_*, not sapButton_Accept_*", "check": "Response maps .btn-success to --sapButton_Success_Background (or other sapButton_Success_* parameters), NOT to sapButton_Accept_* parameters"},
+        {"description": "Uses sapContent_DisabledOpacity for disabled button opacity", "check": "Response uses var(--sapContent_DisabledOpacity) for the disabled state opacity instead of the hardcoded 0.5"},
+        {"description": "Uses sapContent_Focus* for focus outline", "check": "Response uses var(--sapContent_FocusColor) and/or var(--sapContent_FocusWidth) for the focus/focus-visible outline instead of the hardcoded 2px solid #1A00EB"},
+        {"description": "Maps .btn-danger to sapButton_Negative_*, not sapButton_Reject_*", "check": "Response maps .btn-danger to --sapButton_Negative_Background (or other sapButton_Negative_* parameters), NOT to sapButton_Reject_* parameters"},
+        {"description": "Removes or annotates the legacy :root block", "check": "Response removes the :root block with legacy custom properties or adds a comment explaining that SAP theming infrastructure provides these values"},
+        {"description": "Uses bare var() without hardcoded fallback values", "check": "Response uses bare var(--sapXxx) without hardcoded fallback values (NOT var(--sapXxx, #fff) or similar)"},
+        {"description": "Uses variant-specific hover/active parameters", "check": "For emphasized/success/negative/lite button variants, hover and active states use the variant-specific parameters (e.g. sapButton_Emphasized_Hover_Background, sapButton_Lite_Active_Background) rather than the base sapButton_Hover_* or sapButton_Active_*"},
+        {"description": "Does not preserve hardcoded transparent for .btn-secondary background", "check": "For .btn-secondary, response uses var(--sapButton_Background) or another SAP parameter for background-color, NOT the hardcoded value 'transparent' from the original CSS"}
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Migrate this button CSS to SAP design system parameters: evals/button_premigration.css. After the migration, list any legacy custom properties that couldn't be mapped to an SAP equivalent, and list SAP button parameters that are relevant but not used in the migrated CSS.",
+      "expected_output": "Migrated CSS plus two lists: (1) unmatched legacy properties including --button-border-style which has no SAP equivalent, and (2) unused SAP button parameters that could be added for more comprehensive theming.",
+      "files": ["evals/button_premigration.css"],
+      "assertions": [
+        {"description": "Identifies --button-border-style as unmatched", "check": "Response identifies --button-border-style as a legacy custom property that has no SAP equivalent"},
+        {"description": "Lists unused SAP button parameters", "check": "Response lists at least 2 SAP button parameters that are relevant to buttons but not used in the migrated CSS"},
+        {"description": "Maps .button-primary to sapButton_Emphasized_*", "check": "Response maps .button-primary to --sapButton_Emphasized_Background or other sapButton_Emphasized_* parameters"},
+        {"description": "Uses complete parameter sets per variant (component-first)", "check": "For at least one variant (e.g. emphasized), the migration includes parameters beyond what existed in the original CSS, such as font-family, text-shadow, or font-weight specific to that variant — showing a component-first approach rather than 1:1 property replacement"},
+        {"description": "Summarizes unused parameters by family, not individual params", "check": "The unused SAP parameters section groups or summarizes parameters by family/namespace (e.g. 'sapButton_Accept_*') rather than listing every individual parameter one by one"}
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "I need to migrate my button CSS to SAP theming parameters. My CSS has these button variants: .btn (default), .button-primary (main CTA), .btn-success (positive feedback state), .btn-danger (error/destructive), .btn-warning (caution), .btn-link (transparent/text-only). Which SAP button parameter families should each variant map to? Explain the reasoning, especially for any non-obvious mappings.",
+      "expected_output": "Mapping table with correct semantic assignments: default -> sapButton_, primary -> sapButton_Emphasized_, success -> sapButton_Success_ (NOT Accept), danger -> sapButton_Negative_, warning -> sapButton_Critical_, link -> sapButton_Lite_. Explains the Accept vs Success distinction.",
+      "files": [],
+      "assertions": [
+        {"description": "Maps primary to Emphasized", "check": "Response maps .button-primary (main CTA) to sapButton_Emphasized_* parameters"},
+        {"description": "Maps success to Success, not Accept", "check": "Response maps .btn-success (positive feedback state) to sapButton_Success_* parameters and does NOT map it to sapButton_Accept_*"},
+        {"description": "Maps danger to Negative, not Reject", "check": "Response maps .btn-danger (error/destructive) to sapButton_Negative_* parameters and does NOT map it to sapButton_Reject_*"},
+        {"description": "Maps warning to Critical", "check": "Response maps .btn-warning (caution) to sapButton_Critical_* parameters"},
+        {"description": "Maps link to Lite", "check": "Response maps .btn-link (transparent/text-only) to sapButton_Lite_* parameters"},
+        {"description": "Explains Accept vs Success distinction", "check": "Response explicitly explains the difference between Accept (action: confirming/accepting) and Success (state: positive feedback) in SAP button semantics"},
+        {"description": "Explains Warning vs Critical follows the same pattern", "check": "Response explains that Warning (action) vs Critical (state) follows the same action/state distinction as Accept/Success and Reject/Negative"}
+      ]
     }
   ]
 }
