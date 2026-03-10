@@ -1,6 +1,6 @@
 # SAP theming skills
 
-## Installation
+## How to use in a project
 
 Theming skills are installed with [`npx skills`](https://skills.sh). As of today, `npx skills` is not capable of working with GitHub Enterprise instances (like github.tools.sap). Hence, you have to clone the skill on your machine and then use the "local path" installation mode to install the skill in your project:
 
@@ -16,7 +16,19 @@ git submodule update --init
 npx skills add ~/git/github.tools.sap/themedesigner/theming-skills
 ```
 
-## Development
+## How to develop
+
+### Prerequisites / tl;dr
+
+- [ ] **`git`:** `brew install git` to clone this repository and the btp-ui-theme-designer submodule
+- [ ] **`cf`:** `brew install cf` to access the SAP AI Core Service
+- [ ] **cf space with theming-ai-core:** `cf login --sso ...` with a space that has a SAP AI Core Service in the _sap-internal_ (or _extended_) plan named `theming-ai-core`, to build the btp-ui-theme-designer.md index
+- [ ] **`node`:** `brew install nvm && nvm install node` to run the build script (`scripts/build.mjs`) that calls `cf` and builds the btp-ui-theme-designer.md index
+- [ ] **`claude`:** `brew install claude-code` to use the /skill-creator skill
+- [ ] **`/skill-creator`:** `claude plugin install skill-creator@claude-plugins-official` to eval the effectiveness of the sap-theming skill
+- [ ] **`python3` (min. 3.10):** `brew install python3 && echo "export PATH=\$(brew --prefix)/bin:\$PATH" >> ~/.zshrc` to access the /skill-creator eval viewer (the homebrew `python3` has to be first in `$PATH` to have an effect)
+
+### Development Setup
 
 For local development, clone the skill and init its git submodules as described under [Installation](#installation):
 
@@ -44,7 +56,7 @@ brew install python3
 export PATH=$(brew --prefix)/bin:$PATH
 ```
 
-## Build
+### Build
 
 This is mainly a static SKILL.md with a reference of the production UI Theme Designer CF help documentation, and a dynamically built index of that documentation (for faster lookup by agents). To rebuild the index, run
 
@@ -54,7 +66,7 @@ node scripts/build.mjs
 
 You have to be logged in to a CF space where an instance of SAP AI Core Service with the sap-internal plan, named `theming-ai-core`, is available.
 
-## Testing
+### Testing
 
 "Unit tests" are defined in skills/sap-theming/evals/evals.json and claude (`/skill-creator`) discovers and executes them. Start a claude session and prompt something like
 
