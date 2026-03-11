@@ -128,6 +128,43 @@
         {"description": "Removes or annotates the legacy :root block", "check": "Response removes the :root block with legacy custom properties or adds a comment explaining that SAP theming provides these values"},
         {"description": "Uses sapField_Hover_BorderColor for hover state", "check": "Response uses var(--sapField_Hover_BorderColor) or similar hover parameter for the field hover state border color"}
       ]
+    },
+    {
+      "id": 10,
+      "prompt": "Are SAP theming parameters the same thing as design tokens? I keep seeing both terms used. How does SAP's design token system work and where do the theming parameters fit in?",
+      "expected_output": "Explains that SAP Design System design tokens map directly to theming parameters — they are essentially the same concept. Theming parameters are the implementation of design tokens within SAP's theming infrastructure. Mentions that the theming content is the implementation of the SAP Fiori for Web Design System. May mention LESS as the current technology with evolution toward CSS custom properties.",
+      "files": [],
+      "assertions": [
+        {"description": "Explains design tokens map to theming parameters", "check": "Response explains that SAP Design System design tokens are mapped directly to theming parameters, or that they are essentially the same concept / two names for the same thing"},
+        {"description": "Mentions theming content implements the SAP Design System", "check": "Response mentions that the theming content is the implementation of the SAP Fiori for Web Design System, or words to that effect"},
+        {"description": "Mentions LESS and/or CSS custom properties as technology", "check": "Response mentions LESS as the current technology for theming parameters and/or that the system is evolving toward CSS custom properties"},
+        {"description": "References the Parameter Explorer or parameter dependencies doc", "check": "Response mentions the Parameter Explorer (sap.github.io/theming-base-content) or the parameter dependencies documentation as a way to explore the available parameters"}
+      ]
+    },
+    {
+      "id": 11,
+      "prompt": "I changed sapBrandColor in my Evening Horizon-based custom theme to our corporate blue. But it seems like changing this one parameter affected a whole bunch of other things in the UI — links, highlights, selected states all changed. How does this work? Which parameters are affected when I change sapBrandColor in Evening Horizon?",
+      "expected_output": "Explains the parameter dependency hierarchy — sapBrandColor is a top-level parameter that other parameters derive from. In Evening Horizon specifically, sapHighlightColor depends on sapPrimary2 (not sapBrandColor), but sapActiveColor, sapLinkColor, and many component parameters depend on sapBrandColor. Should reference the parameter dependencies table and explain how to trace impact. May mention that dependencies differ between themes.",
+      "files": [],
+      "assertions": [
+        {"description": "Explains parameter hierarchy / dependency concept", "check": "Response explains that theming parameters are organized in a hierarchy where more specific parameters derive/depend on more generic ones, so changing a top-level parameter cascades to dependent parameters"},
+        {"description": "Identifies specific parameters that depend on sapBrandColor", "check": "Response identifies at least 2 specific parameters that depend on sapBrandColor (e.g. sapActiveColor, sapLinkColor, sapShellColor, sapSelectedColor, or component-level parameters)"},
+        {"description": "References the parameter dependencies table", "check": "Response references the theme parameter dependencies documentation or table as the place to trace which parameters depend on which"},
+        {"description": "Mentions dependencies vary between themes", "check": "Response mentions that parameter dependencies can differ between themes (e.g. Morning Horizon vs Evening Horizon vs High Contrast) — the same parameter may have different dependencies in different themes"}
+      ]
+    },
+    {
+      "id": 12,
+      "prompt": "I see parameters like sapPrimary2, sapPrimary3 in the theme parameter dependencies. What are these? Is there some kind of underlying palette that all the semantic parameters get their values from? How does the whole parameter structure work from top to bottom?",
+      "expected_output": "Explains that sapPrimary1-7 (and sapAccentColor1-10 etc.) form a reference palette — they are the lowest-level color constants that many semantic parameters derive from. The hierarchy goes: palette (sapPrimary*) → semantic parameters (sapBrandColor, sapBaseColor, sapHighlightColor) → component parameters (sapButton_*, sapTile_*, etc.). In some themes, sapBrandColor depends on sapPrimary2. The palette values differ between themes (Morning Horizon, Evening Horizon, etc.).",
+      "files": [],
+      "assertions": [
+        {"description": "Identifies sapPrimary* as palette/reference colors", "check": "Response identifies sapPrimary1 through sapPrimary7 (or at least sapPrimary2/sapPrimary3) as base palette or reference colors that serve as the foundation for derived parameters"},
+        {"description": "Describes the hierarchical structure", "check": "Response describes a multi-level hierarchy: base palette → semantic/generic parameters → component-specific parameters (or similar layered structure)"},
+        {"description": "Explains that sapBrandColor depends on sapPrimary2", "check": "Response mentions that sapBrandColor depends on or derives from sapPrimary2 (at least in some themes like Morning Horizon or Evening Horizon)"},
+        {"description": "Mentions that empty cells in the dependency table mean constants", "check": "Response explains that when a parameter has no dependency (empty cell in the table), its value is either a constant (like a hex color) or depends on a non-themable parameter"},
+        {"description": "References Parameter Explorer for interactive exploration", "check": "Response mentions the Parameter Explorer (sap.github.io/theming-base-content) as a way to interactively explore the parameter hierarchy"}
+      ]
     }
   ]
 }
