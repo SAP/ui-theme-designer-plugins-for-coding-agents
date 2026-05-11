@@ -1,0 +1,25 @@
+{
+  "sEntity": "Theme",
+  "sId": "sap_horizon",
+  "sVendor": "SAP",
+  "oExtends": "sap_base",
+  "sLabel": "Morning Horizon",
+  "sFallbackThemeId": "sap_fiori_3",
+  "sType": "STANDARD",
+  "mData": {
+    "mThemeMasterState": {
+      "mSourceInfo": {
+        "sCreated": "2021-06-01T00:00:00.000Z",
+        "sLastModified": "2025-03-01T12:00:00.000Z"
+      },
+      "mBuildInfo": {
+        "sLastBuilt": "2025-03-01T12:00:01.000Z"
+      }
+    }
+  },
+  "aFiles": ["base", "custom", "custom_css"],
+  "aBuildFiles": ["base", "custom", "custom_css"],
+  "sBaseFileId": "base",
+  "sBaseLibraryId": "baseLib",
+  "sBaseThemeId": "sap_base"
+}

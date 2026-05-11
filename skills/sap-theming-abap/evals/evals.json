@@ -1,0 +1,121 @@
+{
+  "skill_name": "sap-theming-abap",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I have an ABAP system at https://dev.acme.corp:44300, client 120. I got this PROPFIND response from Base/baseLib/. Which themes are custom themes vs SAP-provided? The response is in evals/fixtures/propfind_baselib.xml",
+      "expected_output": "Identifies SAP themes (sap_horizon, sap_horizon_dark, sap_horizon_hcb, sap_horizon_hcw) by their sap_ prefix, identifies custom themes (acme_brand, acme_dark) by their non-sap prefix. Mentions that the authoritative check is reading .theming and checking sVendor.",
+      "files": ["evals/fixtures/propfind_baselib.xml"],
+      "assertions": [
+        {"description": "Correctly identifies acme_brand and acme_dark as custom themes", "check": "Response identifies acme_brand and acme_dark as custom/customer themes"},
+        {"description": "Correctly identifies sap_* themes as SAP-provided", "check": "Response identifies sap_horizon, sap_horizon_dark, sap_horizon_hcb, sap_horizon_hcw as SAP-provided themes"},
+        {"description": "Skips the first href (the folder itself)", "check": "Response does NOT list Base/baseLib/ itself as a theme — it correctly skips the first entry which is the queried folder"},
+        {"description": "Mentions sVendor check for authoritative distinction", "check": "Response mentions that checking sVendor in the .theming file is the authoritative way to distinguish custom from SAP themes"}
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Here's the .theming metadata for our acme_brand theme: evals/fixtures/acme_brand_theming.json. Is this theme up to date or does it need a rebuild? Can I modify it?",
+      "expected_output": "Identifies that the theme is up to date (sLastBuilt > sLastModified), confirms it is writable (sVendor is CUSTOMER), and notes it extends sap_horizon.",
+      "files": ["evals/fixtures/acme_brand_theming.json"],
+      "assertions": [
+        {"description": "Correctly determines theme is up to date", "check": "Response states the theme is up to date / does not need rebuild, because sLastBuilt (2025-04-10T16:46:01) is after sLastModified (2025-04-10T16:45:22)"},
+        {"description": "Confirms theme is writable", "check": "Response confirms the theme is writable/modifiable because sVendor is CUSTOMER"},
+        {"description": "Identifies parent theme", "check": "Response mentions that the theme extends/inherits from sap_horizon"},
+        {"description": "Does NOT suggest the theme is read-only", "check": "Response does NOT say the theme is read-only or SAP-provided"}
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Here's the .theming for sap_horizon: evals/fixtures/sap_horizon_theming.json. I want to change sapBrandColor in this theme. How do I do it?",
+      "expected_output": "Refuses to modify sap_horizon directly because sVendor is SAP (read-only). Suggests creating a custom theme that extends sap_horizon (via copy) and modifying the parameter there.",
+      "files": ["evals/fixtures/sap_horizon_theming.json"],
+      "assertions": [
+        {"description": "Identifies theme as read-only", "check": "Response explains that sap_horizon cannot be modified because sVendor is SAP"},
+        {"description": "Suggests creating a custom theme", "check": "Response suggests creating/copying a custom theme based on sap_horizon to make the change"},
+        {"description": "Does NOT provide modification commands for the SAP theme", "check": "Response does NOT provide curl PUT commands to modify sap_horizon directly"}
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "I want to change sapBrandColor to #e63946 in our acme_brand theme. The theme's .theming is at evals/fixtures/acme_brand_theming.json and the parent sap_horizon's base.less is at evals/fixtures/sap_horizon_base.less. Environment: SAP_ABAP_HOST=https://dev.acme.corp:44300, SAP_ABAP_CLIENT=120. Generate the curl commands I need to run.",
+      "expected_output": "Generates curl commands to: (1) GET the current base.less of acme_brand, (2) modify @sapBrandColor value, (3) fetch CSRF token, (4) PUT the modified base.less, (5) PUT updated .theming with new timestamp, (6) send ThemeSaved notification. Uses xsrfid header (not X-CSRF-Token) and correct URL structure.",
+      "files": ["evals/fixtures/acme_brand_theming.json", "evals/fixtures/sap_horizon_base.less"],
+      "assertions": [
+        {"description": "Targets Base/baseLib/acme_brand/base.less", "check": "Response targets the file at Base/baseLib/acme_brand/base.less (the base file in the custom theme, not the parent)"},
+        {"description": "Uses xsrfid header for writes", "check": "Response uses -H \"xsrfid: ...\" (not X-CSRF-Token) in write requests"},
+        {"description": "PUTs source file before .theming", "check": "Response PUTs the LESS file before PUTting the .theming metadata"},
+        {"description": "Updates sLastModified timestamp in .theming", "check": "Response mentions updating mData.mThemeMasterState.mSourceInfo.sLastModified to the current timestamp"},
+        {"description": "Sends ThemeSaved notification", "check": "Response includes a Notify request with ThemeSaved event for acme_brand"},
+        {"description": "Uses correct URL structure", "check": "Response URLs use the pattern https://dev.acme.corp:44300/sap/bc/theming/themes/~client-120/..."},
+        {"description": "Fetches CSRF token first", "check": "Response includes a CSRF token fetch step (GET/HEAD with X-CSRF-Token: Fetch) before the write operations"}
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "I want to add custom CSS to our acme_brand theme. I need to style .acme-header with a gradient background using sapBrandColor and a bottom border using sapGroup_ContentBorderColor. Where do I put this CSS and what's the correct file format?",
+      "expected_output": "Directs the user to write in UR/ls/acme_brand/custom.less (not Base/baseLib/custom.less which is for palette parameters). Shows the LESS content wrapped in /*<SAP_FREETEXT_LESS>*/ markers, referencing parameters with @ syntax.",
+      "files": [],
+      "assertions": [
+        {"description": "Targets UR/ls or UI5/sap/ui/core framework custom.less", "check": "Response targets UR/ls/acme_brand/custom.less or UI5/sap/ui/core/themes/acme_brand/custom.less as the file to edit (NOT Base/baseLib/acme_brand/custom.less)"},
+        {"description": "Uses SAP_FREETEXT_LESS markers", "check": "Response wraps the custom CSS content in /*<SAP_FREETEXT_LESS>*/ and /*</SAP_FREETEXT_LESS>*/ markers"},
+        {"description": "References parameters with @ syntax", "check": "Response uses @sapBrandColor and @sapGroup_ContentBorderColor with LESS @ syntax (not CSS var())"},
+        {"description": "Distinguishes custom.less from custom_css.less", "check": "Response explains or implies that Base/baseLib/custom.less is for palette parameters, not visual CSS rules"}
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "I want to delete the acme_dark theme from our system. I know it exists in Base/baseLib/ and some UI5 libraries. What's the full procedure? Don't actually run anything, just describe the steps and generate example commands. Environment: SAP_ABAP_HOST=https://dev.acme.corp:44300, SAP_ABAP_CLIENT=120.",
+      "expected_output": "Describes the full multi-framework deletion: verify sVendor is CUSTOMER, discover all framework/library occurrences via PROPFIND, fetch CSRF token, DELETE each occurrence with Depth: infinity, optionally notify with ThemeDeleted event, verify deletion.",
+      "files": [],
+      "assertions": [
+        {"description": "Checks sVendor before deleting", "check": "Response includes a step to verify sVendor is CUSTOMER (not SAP) before proceeding with deletion"},
+        {"description": "Discovers all frameworks", "check": "Response describes discovering/enumerating multiple frameworks (at minimum mentions Base and UI5, possibly UR and NWBC)"},
+        {"description": "Deletes from all library occurrences", "check": "Response explains that the theme must be deleted from ALL library folders across all frameworks, not just Base/baseLib/"},
+        {"description": "Uses Depth: infinity on DELETE", "check": "Response includes -H \"Depth: infinity\" in the DELETE curl command"},
+        {"description": "Mentions ThemeDeleted notification", "check": "Response mentions sending a ThemeDeleted notification event after deletion"},
+        {"description": "Confirms with user before destructive action", "check": "Response mentions confirming with the user or asking for confirmation before proceeding with deletion"}
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "I want to define a palette parameter @acmePrimaryBlue that derives from sapBrandColor with 10% darkening, and @acmeSubtleGray as a 5% fade of sapFontColor. Where do these go and what are the rules?",
+      "expected_output": "Directs to Base/baseLib/acme_brand/custom.less (NOT custom_css.less). Shows LESS variable definitions using darken() and fade() functions within SAP_FREETEXT_LESS markers. Mentions that palette parameter names must NOT start with 'sap'.",
+      "files": [],
+      "assertions": [
+        {"description": "Targets Base/baseLib/<theme>/custom.less", "check": "Response targets Base/baseLib/acme_brand/custom.less (or equivalent) as the file for palette parameters"},
+        {"description": "Uses LESS functions correctly", "check": "Response uses darken(@sapBrandColor, 10%) and fade(@sapFontColor, 5%) or equivalent LESS function syntax"},
+        {"description": "Wraps in SAP_FREETEXT_LESS markers", "check": "Response shows the parameters wrapped in /*<SAP_FREETEXT_LESS>*/ markers"},
+        {"description": "States the sap prefix restriction", "check": "Response mentions that palette parameter names must NOT start with 'sap' (the prefix is reserved)"},
+        {"description": "Does NOT direct to custom_css.less", "check": "Response does NOT direct the user to custom_css.less (that file is auto-generated merged CSS, not for palette parameters)"}
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "I want to duplicate sap_horizon to create a new theme called acme_horizon. What steps are involved? Don't execute anything. Environment: SAP_ABAP_HOST=https://dev.acme.corp:44300, SAP_ABAP_CLIENT=120.",
+      "expected_output": "Describes the full copy workflow: discover all library folders containing sap_horizon, COPY each to acme_horizon, update .theming metadata (sId, sLabel, sVendor to CUSTOMER), update LESS files to replace sap_horizon references with acme_horizon, send ThemeSaved notification.",
+      "files": [],
+      "assertions": [
+        {"description": "Copies across all frameworks/libraries", "check": "Response explains that the copy must happen across all framework/library locations (not just Base/baseLib/)"},
+        {"description": "Updates sId in .theming to new name", "check": "Response mentions updating sId to acme_horizon in the .theming metadata"},
+        {"description": "Sets sVendor to CUSTOMER", "check": "Response mentions setting sVendor to CUSTOMER in the copy's .theming"},
+        {"description": "Updates LESS files with new theme ID", "check": "Response mentions updating LESS source files to replace references to the source theme ID with the new theme ID"},
+        {"description": "Uses WebDAV COPY method", "check": "Response uses or mentions the WebDAV COPY HTTP method for copying folders"},
+        {"description": "Sends ThemeSaved notification", "check": "Response includes sending a ThemeSaved notification for the new theme after copying"}
+      ]
+    },
+    {
+      "id": 9,
+      "prompt": "I want to list the custom themes on our ABAP system. Can you show me what's available?",
+      "expected_output": "Detects that SAP_ABAP_HOST, SAP_ABAP_CLIENT, and/or SAP_ABAP_AUTH are not set. Guides the user to set these environment variables before proceeding, explains what each one is for, and shows how to construct SAP_ABAP_AUTH (without asking for raw passwords in the conversation).",
+      "files": [],
+      "assertions": [
+        {"description": "Asks for or mentions SAP_ABAP_HOST", "check": "Response asks the user to provide or set SAP_ABAP_HOST (the system URL)"},
+        {"description": "Asks for or mentions SAP_ABAP_CLIENT", "check": "Response asks the user to provide or set SAP_ABAP_CLIENT (the SAP client number)"},
+        {"description": "Asks for or mentions SAP_ABAP_AUTH", "check": "Response asks the user to provide or set SAP_ABAP_AUTH (the authorization header value)"},
+        {"description": "Explains how to construct SAP_ABAP_AUTH safely", "check": "Response shows how to construct the auth value (e.g. Basic + base64 encoding) and instructs the user to do this themselves, NOT to paste their password into the conversation"},
+        {"description": "Does NOT attempt to run curl without the env vars", "check": "Response does NOT generate curl commands that reference unset $SAP_ABAP_HOST or proceed as if the variables are available"}
+      ]
+    }
+  ]
+}
