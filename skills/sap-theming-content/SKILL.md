@@ -1,7 +1,7 @@
 ---
 name: sap-theming-content
-description: "Use this skill to answer questions about the structure and usage of the SAP theming content/the SAP Fiori design tokens: which themes/parameters exist, how parameters depend on each other, or how they are used in components of SAPs UI technologies (UI5, UI5 Web Components)."
-version: 1.0.0-rc1
+description: "Use this skill to answer questions about the structure and usage of the SAP theming content/the SAP Fiori design tokens: which themes/parameters exist, how parameters depend on each other, or how they are used in components of SAPs UI technologies (UI5, UI5 Web Components, Fundamental Styles)."
+version: 1.0.0-rc2
 ---
 
 # SAP Theming Content
@@ -26,8 +26,14 @@ _(with `.` being the folder that contains this SKILL.md)_
 4. `./webcomponents` exists; if not:
    ```sh
    git clone --depth 1 --filter=blob:none --no-checkout https://github.com/UI5/webcomponents
-   git -C ./webcomponents sparse-checkout set --no-cone 'packages/*/src/themes/**/*.css'
+   git -C ./webcomponents sparse-checkout set --no-cone 'packages/*/src/themes/**/*.css' '!packages/theming/**/*.css'
    git -C ./webcomponents checkout
+   ```
+5. `./fundamental-styles` exists; if not:
+   ```sh
+   git clone --depth 1 --filter=blob:none --no-checkout https://github.com/SAP/fundamental-styles
+   git -C ./fundamental-styles sparse-checkout set --no-cone 'packages/*/src/**/*.scss' '!packages/doc-ui/**/*.scss'
+   git -C ./fundamental-styles checkout
    ```
 
 ## Context
@@ -50,12 +56,15 @@ _(with `.` being the folder that contains this SKILL.md)_
    - instead, they use the CSS custom properties from `Base/baseLib/<theme>/css_variables.css`
    - components have a theme-independent skeleton CSS in `./webcomponents/packages/*/src/themes/<component>.css`
    - this skeleton CSS is merged with CSS custom property definitions in `./webcomponents/packages/*/src/themes/base/<component>-parameters.css` (the "base", always used) and `./webcomponents/packages/*/src/themes/<theme>/<component>-parameters.cs` (the actual theme, as a delta)
+- `./fundamental-styles` contains the SCSS (Sass) of Fundamental Styles
+   - they don't participate in a theme repository
+   - instead, they use the CSS custom properties from `Base/baseLib/<theme>/css_variables.css`
 
 ## Procedure
 
 1. Read `./overview-of-sap-theming-content-91ebfe2.md`
 2. Determine the SAP theme the users question targets, present the available theme IDs from `./theming-base-content/content/Base/baseLib` as select options if unclear, default to `sap_horizon`
-3. Determine the framework the users question targets, present "UI5" (to focus on `./openui5`), "UI5 Web components" (focus on `./webcomponents`) and "Other" (to focus on `./theming-base-content`) as select options if unclear, default to "Other"
+3. Determine the framework the users question targets, present "UI5" (to focus on `./openui5`), "UI5 Web components" (focus on `./webcomponents`), "Fundamental Styles" (focus on `./fundamental-styles`) and "Other" (to focus on `./theming-base-content`) as select options if unclear, default to "Other"
 4. Read the `.theming` file of the framework the users question targets, determine `sBaseLibraryId` and `sSourcePathPattern`
 5. Read the `.theming` file of the theme of the `sBaseLibrary` of the framework the users question targets, based on `sSourcePathPattern` of the frameworks `.theming` file
 6. While there is an `oExtends`:
@@ -71,4 +80,5 @@ _(with `.` being the folder that contains this SKILL.md)_
    3. If an annotation has values for which it also has "anti-values" (the same value but starting with a `!`, e.g. "Protected" and "!Protected"), remove both values from the values list
    4. If an annotation values list is empty, remove the annotation
 9. If the user targets "UI5 Web Components", scan the CSS files in `./webcomponents`, starting from the theme selected
+9. If the user targets "Fundamental Styles", scan the CSS files in `./fundamental-styles`, starting from the theme selected
 10. Answer the users question based on the information collected
