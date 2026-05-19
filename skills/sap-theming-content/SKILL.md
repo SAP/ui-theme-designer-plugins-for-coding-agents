@@ -1,7 +1,7 @@
 ---
 name: sap-theming-content
 description: "Use this skill to answer questions about the structure and usage of the SAP theming content/the SAP Fiori design tokens: which themes/parameters exist, how parameters depend on each other, or how they are used in components of SAPs UI technologies (UI5, UI5 Web Components, Fundamental Styles)."
-version: 1.0.0-rc2
+version: 1.0.0-rc3
 ---
 
 # SAP Theming Content
@@ -79,6 +79,6 @@ _(with `.` being the folder that contains this SKILL.md)_
    2. If an annotation already exists: append the value to the existing annotation values
    3. If an annotation has values for which it also has "anti-values" (the same value but starting with a `!`, e.g. "Protected" and "!Protected"), remove both values from the values list
    4. If an annotation values list is empty, remove the annotation
-9. If the user targets "UI5 Web Components", scan the CSS files in `./webcomponents`, starting from the theme selected
-9. If the user targets "Fundamental Styles", scan the CSS files in `./fundamental-styles`, starting from the theme selected
-10. Answer the users question based on the information collected
+10. If the user targets "UI5 Web Components", scan the CSS files in `./webcomponents`, starting from the theme selected
+11. If the user targets "Fundamental Styles", scan the CSS files in `./fundamental-styles`, starting from the theme selected
+12. Answer the users question based on the information collected
