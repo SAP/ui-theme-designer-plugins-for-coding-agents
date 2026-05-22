@@ -3,7 +3,7 @@
 This repository contains agent skills for SAP theming:
 
 - **`skills/sap-theming-help`** — UI Theme Designer on BTP Cloud Foundry: theme integration, parameter migration, custom CSS, design tokens
-- **`skills/sap-theming-abap`** — Theme management on SAP ABAP systems (on-premise NetWeaver / S/4HANA) via WebDAV: list, inspect, modify, copy, and delete themes
+- **`skills/sap-theming-content`** — Structure and usage of SAP theming content / SAP Fiori design tokens: themes, parameters, dependencies, and component usage in UI5, UI5 Web Components, and Fundamental Styles
 
 ## How to use in a project
 
@@ -48,10 +48,8 @@ export PATH=$(brew --prefix)/bin:$PATH
 
 ### Testing
 
-"Unit tests" are defined in `skills/sap-theming/evals/evals.json` and `skills/sap-theming-abap/evals/evals.json`. Claude (`/skill-creator`) discovers and executes them. Start a claude session and prompt something like
+"Unit tests" are defined in `skills/sap-theming-help/evals/evals.json` and `skills/sap-theming-content/evals/evals.json`. Claude (`/skill-creator`) discovers and executes them. Start a claude session and prompt something like
 
 > /skill-creator evaluate this skill
 
 Claude will then spawn sub-agents for every eval in the json (one `with-skill` and a "baseline" `without-skill`), and grade the effectiveness of the skill regarding this eval. Afterwards, it will generate an HTML file for manual review (with feedback for every eval). The HTML file (open in Chrome) finishes by downloading a `feedback.json` that claude picks up and uses to iterate on the skill.
-
-The `sap-theming-abap` evals are fully offline — they use fixture files (mock PROPFIND XML, .theming JSON, LESS sources) so no live ABAP system is needed.
