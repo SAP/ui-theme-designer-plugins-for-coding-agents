@@ -1,2 +1,3 @@
 node_modules/
-sap-theming-workspace/
+skills/*-workspace/
+skills/sap-theming-help/btp-ui-theme-designer/
