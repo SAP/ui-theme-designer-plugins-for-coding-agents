@@ -1,0 +1,9 @@
+{
+  "name": "theming-skills",
+  "description": "Public theming skills for UI Theme Designer on BTP.",
+  "author": { "name": "SAP SE" },
+  "homepage": "https://github.tools.sap/themedesigner/theming-skills",
+  "repository": "https://github.tools.sap/themedesigner/theming-skills.git",
+  "license": "Apache-2.0",
+  "keywords": ["sap", "theming", "fiori", "design tokens"]
+}
