@@ -9,14 +9,14 @@ This repository contains agent skills for SAP theming:
 
 ### Claude Code (recommended)
 
-This repository is a plugin in the `themedesigner` Claude Code marketplace:
+This repository is a plugin in the `sap-theming-internal` Claude Code marketplace:
 
 ```
-/plugin marketplace add https://github.tools.sap/themedesigner/theming-team-skills
-/plugin install theming-skills@themedesigner
+/plugin marketplace add https://github.tools.sap/themedesigner/theming-team-skills.git
+/plugin install theming-skills@sap-theming-internal
 ```
 
-Pull updates with `/plugin marketplace update themedesigner`.
+Pull updates with `/plugin marketplace update sap-theming-internal`.
 
 ### Other editors (Codex, Cursor, Copilot, …)
 
