@@ -1,6 +1,6 @@
 # Theming repository layout
 
-This document explains how SAP theming content is organized across multiple repositories and how the pieces fit together. The `sap-theming-content` skill loads it on demand when navigating these files.
+This document explains how SAP Theming Base Content is organized across multiple repositories and how the pieces fit together. The `design-tokens` skill loads it on demand when navigating these files.
 
 _(all paths below are relative to the folder that contains the skill's `SKILL.md`)_
 

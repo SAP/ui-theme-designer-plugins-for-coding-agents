@@ -1,5 +1,5 @@
 {
-  "skill_name": "sap-theming-help",
+  "skill_name": "help",
   "schema_version": 2,
   "grading": {
     "type": "llm_judge",
@@ -57,8 +57,8 @@
       "name": "brand-accessibility-color-contrast",
       "prompt": "How do I check whether my custom theme meets accessibility color-contrast requirements?",
       "rubric": [
-        "Mentions accessibility features in UI Theme Designer (e.g. contrast checking, accessibility preview, or the dedicated accessibility chapter).",
-        "Or, if it cannot point to a built-in checker, suggests an external WCAG contrast tool while flagging that it's not in the Theme Designer itself.",
+        "Mentions accessibility features in UI theme designer (e.g. contrast checking, accessibility preview, or the dedicated accessibility chapter).",
+        "Or, if it cannot point to a built-in checker, suggests an external WCAG contrast tool while flagging that it's not in the theme designer itself.",
         "Does not invent a feature the docs don't describe (e.g. an automated 'fix contrast' button)."
       ]
     },
@@ -68,7 +68,7 @@
       "name": "consultant-theme-feasibility-overview",
       "prompt": "A customer wants their corporate logo, brand colors, and custom typography applied to their SAP applications. Walk me through what's realistically possible with UI Theme Designer and where the boundaries are.",
       "rubric": [
-        "Confirms colors, logo, and (where supported) fonts can be themed via Theme Designer.",
+        "Confirms colors, logo, and (where supported) fonts can be themed via the theme designer.",
         "Names at least one limitation or constraint (e.g. parameter scope, fallback behavior, base-theme dependency, third-party app coverage).",
         "Avoids vague hand-waving about 'anything is possible'."
       ]
@@ -101,7 +101,7 @@
       "name": "frontend-determining-theme-root",
       "prompt": "My custom SAPUI5 application needs to load a custom theme from UI Theme Designer at runtime. How do I configure the theme ID and theme root for the app?",
       "rubric": [
-        "Mentions the theme ID (e.g. the custom theme identifier from Theme Designer) AND the theme root URL/parameter that points to where the compiled CSS lives.",
+        "Mentions the theme ID (e.g. the custom theme identifier from the theme designer) AND the theme root URL/parameter that points to where the compiled CSS lives.",
         "References the bootstrap configuration (e.g. data-sap-ui-theme, data-sap-ui-themeRoots, or sap-ui-bootstrap script attributes).",
         "Does not invent unrelated configuration (e.g. a fictional 'theme registry' service)."
       ]
@@ -112,7 +112,7 @@
       "name": "uxdesigner-export-theme-for-figma",
       "prompt": "I've built a theme in UI Theme Designer and I want to use the same colors in my Figma prototypes. What's the recommended workflow?",
       "rubric": [
-        "Acknowledges that there is no built-in Figma export, OR that the workflow involves exporting the theme from Theme Designer and applying it to the Fiori Web UI Kit manually.",
+        "Acknowledges that there is no built-in Figma export, OR that the workflow involves exporting the theme from the theme designer and applying it to the Fiori Web UI Kit manually.",
         "Does not invent a 'Figma plugin' or 'Figma export button' that the docs don't describe.",
         "If suggesting a workaround, the workaround does not require fabricated tooling."
       ]
@@ -169,7 +169,7 @@
       "rubric": [
         "Mentions the Developer (sap-theming) and Publisher (sap-theming) roles by name (or a clearly equivalent paraphrase).",
         "Distinguishes 'creating/editing themes' from 'publishing themes' as separate role responsibilities.",
-        "Does not invent role names like 'Theme Designer Administrator' that the docs don't describe."
+        "Does not invent role names like 'Theme designer administrator' that the docs don't describe."
       ]
     },
     {
@@ -178,7 +178,7 @@
       "name": "sapfrontend-theming-parameter-deprecation",
       "prompt": "I'm reviewing CSS in our SAPUI5 control library and I want to make sure none of the theming parameters we use are deprecated. Where do I find this information?",
       "rubric": [
-        "Points to the 'what's new' or theming-parameter-changes documentation (or equivalent) in the Theme Designer docs.",
+        "Points to the 'what's new' or theming-parameter-changes documentation (or equivalent) in the theme designer docs.",
         "Or references the theming content / parameter dependency information.",
         "Does not invent a 'deprecated parameters API' or non-existent linting tool."
       ]
@@ -189,7 +189,7 @@
       "name": "sapfrontend-test-custom-control-themability",
       "prompt": "I'm building a custom SAPUI5 control. How can I test that it renders correctly across all SAP base themes (Horizon, Quartz, Belize, high-contrast variants)?",
       "rubric": [
-        "Suggests using the Theme Designer preview with the custom control library loaded, OR a local test environment that switches themes.",
+        "Suggests using the theme designer preview with the custom control library loaded, OR a local test environment that switches themes.",
         "Mentions the multiple themes / variants that need to be tested.",
         "Does not invent automated theme-test tooling that the docs don't describe."
       ]
@@ -211,8 +211,8 @@
       "name": "btpbackend-integrate-with-application-router",
       "prompt": "How do I integrate my UI Theme Designer service instance with my Application Router so my app can serve themed pages?",
       "rubric": [
-        "Mentions binding the UI Theme Designer service instance AND the HTML5 Application Repository service to the Application Router.",
-        "Notes that routing is automatic / no manual xs-app.json route additions are required for the Theme Designer.",
+        "Mentions binding the UI theme designer service instance AND the HTML5 Application Repository service to the Application Router.",
+        "Notes that routing is automatic / no manual xs-app.json route additions are required for the theme designer.",
         "Does not invent unrelated app-router configuration (e.g. fictional middleware modules)."
       ]
     },
@@ -222,7 +222,7 @@
       "name": "btpbackend-verify-setup-success",
       "prompt": "After I bind everything together, how do I verify that my UI Theme Designer integration is actually working before I hand it over?",
       "rubric": [
-        "Suggests a concrete verification step such as the health/ping endpoint of the theming runtime, OR successfully launching the Theme Designer web app at the published route.",
+        "Suggests a concrete verification step such as the health/ping endpoint of the theming runtime, OR successfully launching the theme designer web app at the published route.",
         "Names at least one specific URL/path or success indicator from the docs.",
         "Does not invent verification endpoints that don't exist."
       ]
@@ -288,7 +288,7 @@
       "name": "admin-self-hosting-themes",
       "prompt": "Can I host themes myself instead of using the SAP UI Theme Designer service? Our security policy doesn't allow third-party services for some apps.",
       "rubric": [
-        "Confirms that self-hosting themes is supported and points to the 'self-hosting themes for use without the UI Theme Designer service' chapter.",
+        "Confirms that self-hosting themes is supported and points to the 'self-hosting themes for use without the UI theme designer service' chapter.",
         "Mentions at least one trade-off (e.g. losing the editor / losing automatic updates / requiring CSS to be served from your own infrastructure).",
         "Does not deny that self-hosting is possible."
       ]
@@ -310,9 +310,9 @@
       "name": "projectlead-licensing",
       "prompt": "Is UI Theme Designer a separate product I need to license, or is it included with something we already have?",
       "rubric": [
-        "Clarifies that UI Theme Designer is bundled with SAP Build Work Zone (standard and/or advanced edition) and not sold standalone.",
+        "Clarifies that UI theme designer is bundled with SAP Build Work Zone (standard and/or advanced edition) and not sold standalone.",
         "References the service plans / metering documentation.",
-        "Does not invent a separate 'UI Theme Designer license SKU' or wrong pricing model."
+        "Does not invent a separate 'UI theme designer license SKU' or wrong pricing model."
       ]
     },
     {
@@ -332,7 +332,7 @@
       "name": "uxdesigner-collaborate-via-import-export",
       "prompt": "Our brand designer has built a theme in UI Theme Designer in their subaccount, and I want to take it into ours to iterate on it. How do we hand it over?",
       "rubric": [
-        "Mentions exporting the theme as a transportable archive and importing it into the target subaccount's UI Theme Designer.",
+        "Mentions exporting the theme as a transportable archive and importing it into the target subaccount's theme designer.",
         "Notes that the imported theme will need to be published in the new tenant before it's usable.",
         "Does not invent a 'share theme' link or fictional collaboration feature."
       ]
