@@ -3,7 +3,7 @@ name: help
 description: "TRIGGER: how-to and conceptual questions about UI theme designer on BTP — setup, user/role management, creating/editing themes, quick/detailed/expert theming, publishing, transporting themes, fallback themes, theme sets, integrating with Build Work Zone / S/4HANA / SAPUI5 / SAP GUI, troubleshooting and error messages. SKIP: questions about which themes or parameters exist or what values they have (use design-tokens). SKIP: tenant-specific operational questions about a running system (\"which themes do we have?\", \"which users are assigned?\")."
 allowed-tools: Bash(git clone *) Bash(git -C * sparse-checkout *) Bash(git -C * checkout) Read
 metadata:
-  version: 1.0.0-rc1
+  version: 1.0.0
 ---
 
 # UI theme designer help
