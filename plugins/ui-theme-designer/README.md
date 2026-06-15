@@ -44,5 +44,5 @@ claude plugin install ui-theme-designer@claude-plugins-official
 If your coding agent doesn't support plugins, install the skills directly using the [skills](https://www.npmjs.com/package/skills) package:
 
 ```bash
-npx skills add SAP/theming-plugins-coding-agents
+npx skills add SAP/ui-theme-designer-plugins-for-coding-agents
 ```
