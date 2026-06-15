@@ -1,6 +1,6 @@
 # UI Theme Designer Plugins for Coding Agents
 
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.1%20adopted-ff69b4.svg)](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents?tab=coc-ov-file#readme)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.1%20adopted-ff69b4.svg)](https://github.com/SAP/.github/blob/main/CODE_OF_CONDUCT.md)
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP/ui-theme-designer-plugins-for-coding-agents)](https://api.reuse.software/info/github.com/SAP/ui-theme-designer-plugins-for-coding-agents)
 
 A collection of plugins for coding agents that provide AI coding assistants with knowledge and tooling for working with [UI theme designer](https://help.sap.com/docs/btp/sap-business-technology-platform/sap-ui-theme-designer) and the SAP Design System — including [SAP Fiori design tokens](https://github.com/SAP/theming-base-content).
@@ -30,7 +30,7 @@ If you find any bug that might be a security problem, please follow the instruct
 
 ## Code of Conduct
 
-We as members, contributors, and leaders pledge to make participation in our community a harassment-free experience for everyone. By participating in this project, you agree to abide by its [Code of Conduct](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents?tab=coc-ov-file#readme) at all times.
+We as members, contributors, and leaders pledge to make participation in our community a harassment-free experience for everyone. By participating in this project, you agree to abide by its [Code of Conduct](https://github.com/SAP/.github/blob/main/CODE_OF_CONDUCT.md) at all times.
 
 ## Licensing
 
