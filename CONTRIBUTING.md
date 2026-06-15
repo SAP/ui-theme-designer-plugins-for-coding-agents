@@ -9,14 +9,14 @@
 
 ### ⚡️ Quick Links for Maintainers
 
-- [All Open Pull Requests](https://github.com/SAP/theming-plugins-coding-agents/pulls)
-- [All Open Issues](https://github.com/SAP/theming-plugins-coding-agents/issues)
+- [All Open Pull Requests](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/pulls)
+- [All Open Issues](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/issues)
 
 ## 📝 Reporting Issues
 
 ### Seeking Help / Not a Bug
 
-If you need help setting anything up, or if you have questions regarding the UI theme designer plugins for coding agents, please use [GitHub Discussions](https://github.com/SAP/theming-plugins-coding-agents/discussions) instead of opening an issue.
+If you need help setting anything up, or if you have questions regarding the UI theme designer plugins for coding agents, please use [GitHub Discussions](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/discussions) instead of opening an issue.
 
 ### How to Report an Issue
 
@@ -25,7 +25,7 @@ If you need help setting anything up, or if you have questions regarding the UI 
         * Issues caused by dependencies.
         * Issues caused by the use of non-public/internal methods. Only the public methods listed in the API documentation may be used.
         * Something you do not get to work properly, see [Not a Bug / Questions](#seeking-help--not-a-bug).
-2. **No duplicate**: You've searched the [issue tracker](https://github.com/SAP/theming-plugins-coding-agents/issues?q=is%3Aissue) to make sure the bug hasn't already been reported.
+2. **No duplicate**: You've searched the [issue tracker](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/issues?q=is%3Aissue) to make sure the bug hasn't already been reported.
 3. **Good summary**: The summary should be specific to the issue.
 4. **Current bug**: The bug can be reproduced in the current version of the relevant plugin(s).
 5. **Reproducible bug**: There are step-by-step instructions provided on how to reproduce the issue.
@@ -38,11 +38,11 @@ If you need help setting anything up, or if you have questions regarding the UI 
 
 We encourage you to follow the issue template that will be presented to you when creating a new issue.
 
-When you're ready, report your issue here: https://github.com/SAP/theming-plugins-coding-agents/issues/new
+When you're ready, report your issue here: https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/issues/new
 
 ### Reporting Security Issues
 
-If you find any bug that might be a security problem, please follow the instructions given in the [Security Policy](https://github.com/SAP/theming-plugins-coding-agents/security/policy) on how to report it. Please do not create GitHub issues for security-related concerns or problems.
+If you find any bug that might be a security problem, please follow the instructions given in the [Security Policy](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/security/policy) on how to report it. Please do not create GitHub issues for security-related concerns or problems.
 
 ### Use of Labels
 
@@ -82,7 +82,7 @@ Bug report analysis support is always very welcome! See [Analyze Issues](#-analy
 
 ## 🤩 Feature Requests
 
-You can request features by creating an issue in this repository: https://github.com/SAP/theming-plugins-coding-agents/issues/new
+You can request features by creating an issue in this repository: https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/issues/new
 
 For bigger features, please open an issue first to discuss the proposed feature with the project contributors before investing significant time into an implementation.
 
