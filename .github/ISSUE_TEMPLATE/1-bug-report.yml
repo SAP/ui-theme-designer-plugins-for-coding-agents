@@ -5,7 +5,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Please have a look at our [contributing guidelines](https://github.com/SAP/theming-plugins-coding-agents/blob/main/CONTRIBUTING.md#-reporting-issues) on reporting issues.
+        Please have a look at our [contributing guidelines](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/blob/main/CONTRIBUTING.md#-reporting-issues) on reporting issues.
   - type: textarea
     id: steps-to-reproduce
     attributes:

@@ -3,7 +3,7 @@
 To get it merged faster, kindly review the checklist below:
 
 ## Pull Request Checklist
-- [ ] Reviewed the [Contributing Guidelines](https://github.com/SAP/theming-plugins-coding-agents/blob/main/CONTRIBUTING.md#-contributing-code)
-    + Especially the [How to Contribute](https://github.com/SAP/theming-plugins-coding-agents/blob/main/CONTRIBUTING.md#how-to-contribute) section
-- [ ] [No merge commits](https://github.com/SAP/theming-plugins-coding-agents/blob/main/docs/Guidelines.md#no-merge-commits)
-- [ ] [Correct commit message style](https://github.com/SAP/theming-plugins-coding-agents/blob/main/docs/Guidelines.md#commit-message-style)
+- [ ] Reviewed the [Contributing Guidelines](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/blob/main/CONTRIBUTING.md#-contributing-code)
+    + Especially the [How to Contribute](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/blob/main/CONTRIBUTING.md#how-to-contribute) section
+- [ ] [No merge commits](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/blob/main/docs/Guidelines.md#no-merge-commits)
+- [ ] [Correct commit message style](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/blob/main/docs/Guidelines.md#commit-message-style)
