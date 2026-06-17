@@ -1,9 +1,9 @@
 ---
 name: help
-description: "TRIGGER: how-to and conceptual questions about UI theme designer on BTP — setup, user/role management, creating/editing themes, quick/detailed/expert theming, publishing, transporting themes, fallback themes, theme sets, integrating with Build Work Zone / S/4HANA / SAPUI5 / SAP GUI, troubleshooting and error messages. SKIP: questions about which themes or parameters exist or what values they have (use design-tokens). SKIP: tenant-specific operational questions about a running system (\"which themes do we have?\", \"which users are assigned?\")."
+description: "Local copy of the customer-facing UI theme designer help on help.sap.com (BTP / Cloud Foundry edition). Use whenever you need to check what is — or is not — documented for customers about UI theme designer: setup, user/role management, themes/theme sets (creating, editing, publishing, transporting, fallback), quick/detailed/expert theming, integrations (Build Work Zone, S/4HANA, SAPUI5, SAP GUI), security, rate limits, size limits, error messages, troubleshooting, accessibility, what's-new. Try this for any 'is X documented?' or 'what does the help say about Y?' question. SKIP: questions about which themes or parameters exist or what values they have (use design-tokens). SKIP: tenant-specific operational questions about a running system (\"which themes do we have?\", \"which users are assigned?\")."
 allowed-tools: Bash(git clone *) Bash(git -C * sparse-checkout *) Bash(git -C * checkout) Read
 metadata:
-  version: 1.0.0
+  version: 1.0.0-rc3
 ---
 
 # UI theme designer help
