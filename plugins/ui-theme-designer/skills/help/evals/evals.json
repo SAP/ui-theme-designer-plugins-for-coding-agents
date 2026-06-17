@@ -336,6 +336,28 @@
         "Notes that the imported theme will need to be published in the new tenant before it's usable.",
         "Does not invent a 'share theme' link or fictional collaboration feature."
       ]
+    },
+    {
+      "id": 31,
+      "persona": "Administrator",
+      "name": "admin-is-theme-count-limit-documented",
+      "prompt": "Is there a documented maximum number of themes I can create per tenant in UI Theme Designer?",
+      "rubric": [
+        "Answers based on the customer help (i.e. consulted this skill's docs/cf/ tree).",
+        "States that the help documents per-theme size limits and per-tenant rate limits, but does not document a maximum theme count per tenant.",
+        "Does not fabricate a specific theme-count cap (e.g. '50 themes per tenant') that is not in the help."
+      ]
+    },
+    {
+      "id": 32,
+      "persona": "Customer-Side Front-End Developer",
+      "name": "frontend-documented-theme-size-limits",
+      "prompt": "What size limits does the UI Theme Designer help mention for themes and images?",
+      "rubric": [
+        "Cites the documented per-theme size cap (100 MB unpacked / 10 MB gzipped) and the per-image cap (3 MB unpacked).",
+        "Sourced from the customer help (i.e. consulted this skill's docs/cf/ tree), not invented or pulled from elsewhere.",
+        "Does not conflate these size limits with the separate API rate limit."
+      ]
     }
   ]
 }
