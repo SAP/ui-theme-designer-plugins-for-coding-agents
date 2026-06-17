@@ -1,0 +1,51 @@
+name: Bug Report
+description: Report an issue related to the UI theme designer plugins for coding agents
+type: Bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please have a look at our [contributing guidelines](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/blob/main/CONTRIBUTING.md#-reporting-issues) on reporting issues.
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: What is the issue and how can we reproduce it?
+      description: |
+        To help us understand and resolve the issue efficiently, please provide a **minimal reproducible example** (required) and steps that clearly illustrate the unexpected behavior.
+      value: |
+        1. Install plugin ...
+        2. Ask the coding agent ...
+        3. ... --> **Issue:** ...
+
+        #### Error:
+        > ...
+
+        #### Expected behavior:
+        ...
+    validations:
+      required: true
+  - type: input
+    id: plugin
+    attributes:
+      label: Affected plugin
+      description: Which plugin is affected? (e.g. `ui-theme-designer`)
+    validations:
+      required: true
+  - type: input
+    id: agent
+    attributes:
+      label: Coding agent / version
+      description: Which coding agent (and version) did you use? (e.g. Claude Code 1.2.3)
+    validations:
+      required: true
+  - type: checkboxes
+    id: issue-checked
+    attributes:
+      label: Confirmation
+      description: |
+        To avoid duplicates and ensure efficient issue resolution, check if a similar issue has already been reported.
+      options:
+        - label: I've searched the existing issues and reviewed the relevant documentation.
+          required: true
+        - label: I am not disclosing any internal or sensitive information.
+          required: true
