@@ -6,6 +6,7 @@
 A collection of plugins for coding agents that provide AI coding assistants with knowledge and tooling for working with [UI theme designer](https://help.sap.com/docs/btp/sap-business-technology-platform/sap-ui-theme-designer) and the SAP Design System — including [SAP Fiori design tokens](https://github.com/SAP/theming-base-content).
 
 - [Plugin Overview](#plugin-overview)
+- [Requirements](#requirements)
 - [Further Information](#further-information)
 - [Support, Feedback, Contributing](#support-feedback-contributing)
 - [Security / Disclosure](#security--disclosure)
@@ -15,6 +16,10 @@ A collection of plugins for coding agents that provide AI coding assistants with
 ## Plugin Overview
 
 - [UI theme designer](./plugins/ui-theme-designer/README.md) — how-to and conceptual answers about UI theme designer on BTP, and answers about the SAP Design System and SAP Fiori design tokens, including which parameters UI components consume
+
+## Requirements
+
+These plugins are designed for AI coding agents such as [Claude Code](https://code.claude.com/). No additional SAP software installation is required.
 
 ## Further Information
 
