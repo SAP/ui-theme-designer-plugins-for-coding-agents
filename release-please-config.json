@@ -1,6 +1,7 @@
 {
     "packages": {
         ".": {
+            "release-type": "simple",
             "pull-request-header": ":tractor: New release prepared",
             "pull-request-title-pattern": "release: v${version}",
             "include-component-in-tag": false,
@@ -67,11 +68,6 @@
                 {
                     "type": "json",
                     "path": "plugins/ui-theme-designer/.claude-plugin/plugin.json",
-                    "jsonpath": "$..version"
-                },
-                {
-                    "type": "json",
-                    "path": "plugins/ui-theme-designer/plugin.json",
                     "jsonpath": "$..version"
                 }
             ]
