@@ -2,8 +2,6 @@
 name: design-tokens
 description: "TRIGGER: questions about the SAP Design System and SAP Fiori design tokens — which themes exist, what value a theme parameter (e.g. sapButton_Background, sapHighlightColor) has in a given theme, how parameters inherit/extend across the theme chain, which parameters a specific UI component (UI5 control, UI5 Web Component, Fundamental Styles component) consumes. SKIP: how-to questions about UI theme designer as a product (creating, publishing, transporting themes — use help)."
 allowed-tools: Bash(git clone *) Bash(git -C * sparse-checkout *) Bash(git -C * checkout) Read WebFetch
-metadata:
-  version: 1.0.0
 ---
 
 # Design Tokens
