@@ -8,8 +8,10 @@ on:
     branches:
       - main
 
-# No permissions are required for this workflow
-permissions: {}
+# actions/checkout needs contents:read to clone a private repo;
+# anonymous clone only works for public repos.
+permissions:
+  contents: read
 
 jobs:
   compliance-check:
