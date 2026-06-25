@@ -8,9 +8,9 @@ General plugin for coding agents working with the UI theme designer [SAP Help pa
 
 #### help
 
-Answers how-to and conceptual questions about UI theme designer on BTP:
+Answers how-to get started with UI theme designer and conceptual questions about UI theme designer on BTP:
 
-- Setup, user/role management
+- Initial setup, including user/role management
 - Creating, editing, and publishing themes
 - Quick, detailed, and expert theming workflows
 - Transporting themes, fallback themes, theme sets
