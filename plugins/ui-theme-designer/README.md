@@ -1,6 +1,6 @@
-# UI theme designer plugin for coding agents
+# UI Theme Designer Plugin
 
-Plugin for coding agents working with [UI theme designer](https://help.sap.com/docs/btp/sap-business-technology-platform/sap-ui-theme-designer) and the SAP Design System — including [SAP Fiori design tokens](https://github.com/SAP/theming-base-content).
+General plugin for coding agents working with the UI theme designer [SAP Help pages](https://help.sap.com/docs/btp/sap-business-technology-platform/sap-ui-theme-designer) and the SAP Design System — including [SAP Fiori design tokens](https://github.com/SAP/theming-base-content).
 
 ## Key Features
 
@@ -8,9 +8,9 @@ Plugin for coding agents working with [UI theme designer](https://help.sap.com/d
 
 #### help
 
-Answers how-to and conceptual questions about UI theme designer on BTP:
+Answers how-to get started with UI theme designer and conceptual questions about UI theme designer on BTP:
 
-- Setup, user/role management
+- Initial setup, including user/role management
 - Creating, editing, and publishing themes
 - Quick, detailed, and expert theming workflows
 - Transporting themes, fallback themes, theme sets
@@ -27,13 +27,13 @@ Answers questions about the SAP Design System and SAP Fiori design tokens:
 
 ## Installation
 
-### Via Claude CLI
+### Via Claude CLI (coming soon)
 
 ```bash
 claude plugin install ui-theme-designer@claude-plugins-official
 ```
 
-### In Claude Code
+### In Claude Code (coming soon)
 
 ```
 /plugin install ui-theme-designer@claude-plugins-official
