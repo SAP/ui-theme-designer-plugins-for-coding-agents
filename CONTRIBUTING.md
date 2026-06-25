@@ -46,29 +46,35 @@ If you find any bug that might be a security problem, please follow the instruct
 
 ### Use of Labels
 
-GitHub offers labels to categorize issues. The labels can only be set and modified by committers.
+GitHub offers labels to categorize issues and pull requests. The labels can only be set and modified by committers.
 
-#### General issue types:
+#### Issue Labels
 
-- **`Bug`**: This issue is a bug in the code.
-- **`Feature`**: This is not a bug report, but a feature request.
+##### General issue types:
 
-#### Specific Issue Categories:
+- **`🐛 Bug`**: This issue is a bug in the code.
+- **`🤩 Feature`**: This is not a bug report, but a feature request.
 
-- **`documentation`**: This issue is documentation-related.
-- **`needs triage`**: This issue needs to be investigated and confirmed as a valid issue that is not a duplicate.
+##### Specific issue categories:
+
+- **`📄 Documentation`**: This issue is documentation-related.
+- **`🩺 Needs Triage`**: This issue needs to be investigated and confirmed as a valid issue that is not a duplicate.
 
 ##### Status of an open issue:
 
-- **`information required`**: The author is required to provide more information.
-- **`good first issue`**: A newcomer may work on this.
-- **`help wanted`**: Additional help in analyzing this issue is required.
+- **`❓ Information Required`**: The author is required to provide more information.
+- **`🥇 Good First Issue`**: A newcomer may work on this.
+- **`🙋 Help Wanted`**: Additional help in analyzing this issue is required.
 
 ##### Status/resolution of a closed issue:
 
-- **`duplicate`**: The issue has already been reported elsewhere.
-- **`invalid`**: This issue report will not be handled further. Possible reasons are lack of information or an issue that does not arise anymore.
-- **`wontfix`**: While we acknowledge the issue, a fix cannot or will not be provided.
+- **`🤲 Duplicate`**: The issue has already been reported elsewhere.
+- **`⛓️‍💥 Invalid`**: This issue report will not be handled further. Possible reasons are lack of information or an issue that does not arise anymore.
+- **`❌ Wont Fix`**: While we acknowledge the issue, a fix cannot or will not be provided.
+
+#### Pull Request Labels
+
+Pull requests are labeled with the [conventional commit](https://www.conventionalcommits.org/) type of the change: `feat`, `fix`, `perf`, `refactor`, `docs`, `test`, `build`, `ci`, `chore`, `deps`, `style`, `revert`. Breaking changes additionally get the `breaking` label.
 
 ### Issue Reporting Disclaimer
 
