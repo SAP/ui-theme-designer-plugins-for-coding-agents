@@ -3,7 +3,7 @@
         ".": {
             "release-type": "simple",
             "pull-request-header": ":tractor: New release prepared",
-            "pull-request-title-pattern": "release: v${version}",
+            "pull-request-title-pattern": "chore: Release v${version}",
             "include-component-in-tag": false,
             "bump-minor-pre-major": true,
             "bump-patch-for-minor-pre-major": true,
@@ -59,8 +59,8 @@
                     "hidden": true
                 },
                 {
-                    "type": "release",
-                    "section": "Release",
+                    "type": "chore",
+                    "section": "Miscellaneous",
                     "hidden": true
                 }
             ],
