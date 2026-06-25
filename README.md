@@ -3,7 +3,7 @@
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.1%20adopted-ff69b4.svg)](https://github.com/SAP/.github/blob/main/CODE_OF_CONDUCT.md)
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP/ui-theme-designer-plugins-for-coding-agents)](https://api.reuse.software/info/github.com/SAP/ui-theme-designer-plugins-for-coding-agents)
 
-A collection of plugins for coding agents that provide AI coding assistants with knowledge and tooling for working with [UI theme designer](https://help.sap.com/docs/btp/sap-business-technology-platform/sap-ui-theme-designer) and the SAP Design System — including [SAP Fiori design tokens](https://github.com/SAP/theming-base-content).
+A collection of plugins for coding agents that provide AI coding assistants with knowledge and tooling for working with [UI theme designer](https://help.sap.com/docs/btp/sap-business-technology-platform/sap-ui-theme-designer) and the SAP Design System — including [SAP Fiori design tokens](https://github.com/SAP/theming-base-content). Navigate to the plugins in [Plugin Overview](#plugin-overview) to learn how to install them.
 
 - [Plugin Overview](#plugin-overview)
 - [Requirements](#requirements)
@@ -15,7 +15,7 @@ A collection of plugins for coding agents that provide AI coding assistants with
 
 ## Plugin Overview
 
-- [UI theme designer](./plugins/ui-theme-designer/README.md) — how-to and conceptual answers about UI theme designer on BTP, and answers about the SAP Design System and SAP Fiori design tokens, including which parameters UI components consume
+- [UI theme designer](./plugins/ui-theme-designer/README.md) — how-to and conceptual answers about UI theme designer on BTP, and answers about the SAP Design System and SAP Fiori design tokens, including which parameters UI components consume.
 
 ## Requirements
 
