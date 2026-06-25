@@ -15,7 +15,7 @@ A collection of plugins for coding agents that provide AI coding assistants with
 
 ## Plugin Overview
 
-- [UI theme designer](./plugins/ui-theme-designer/README.md) — how-to and conceptual answers about UI theme designer on BTP, and answers about the SAP Design System and SAP Fiori design tokens, including which parameters UI components consume.
+- [UI theme designer](./plugins/ui-theme-designer/README.md) &ndash; Provides practical guidance and conceptual support for using UI Theme Designer on BTP. It also answers questions about the SAP Design System and SAP Fiori design tokens, including which theming parameters are used by specific UI components.
 
 ## Requirements
 
