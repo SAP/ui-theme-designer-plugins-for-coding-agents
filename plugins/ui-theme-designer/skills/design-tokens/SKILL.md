@@ -44,7 +44,7 @@ Read `references/theming-repository-layout.md` for the layout of `.theming` file
 
 1. Read `overview-of-sap-theming-content-91ebfe2.md`
 2. Determine the SAP theme the users question targets, present the available theme IDs from `theming-base-content/content/Base/baseLib` as select options if unclear, default to `sap_horizon`
-3. Determine the framework the users question targets, present "UI5" (to focus on `openui5`), "UI5 Web components" (focus on `webcomponents`), "Fundamental Styles" (focus on `fundamental-styles`) and "Other" (to focus on `theming-base-content`) as select options if unclear, default to "Other"
+3. Determine the framework the users question targets, present "UI5" (to focus on `openui5`), "UI5 Web components" (focus on `webcomponents`), "Fundamental Styles" (focus on `fundamental-styles`) and "Other" (to focus on `theming-base-content`) as select options if unclear; if the user asks for tokens of a specific component without specifying a framework, default to "UI5 Web Components" and search `webcomponents/packages/*/src/themes/` for the component — if no matching component CSS is found there, fall back to searching `theming-base-content/content/Base/baseLib/<theme>/css_variables.css` for parameters containing the component name; otherwise default to "Other"
 4. Read the `.theming` file of the framework the users question targets, determine `sBaseLibraryId` and `sSourcePathPattern`
 5. Read the `.theming` file of the theme of the `sBaseLibrary` of the framework the users question targets, based on `sSourcePathPattern` of the frameworks `.theming` file
 6. While there is an `oExtends`:
