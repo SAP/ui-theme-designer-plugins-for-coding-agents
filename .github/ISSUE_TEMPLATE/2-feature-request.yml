@@ -1,30 +1,35 @@
 name: Feature Request
-description: Request a new feature to be added to the UI theme designer plugins for coding agents
+description: Request a new feature to be added to the UI theme designer plugins for coding agents.
 type: Feature
+labels:
+  - "🤩 Feature"
 body:
+  # ===== Title ===============================================================
   - type: markdown
     attributes:
       value: |
-        Please have a look at our [contributing guidelines](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/blob/main/CONTRIBUTING.md#-feature-requests) on requesting features.
+        Thank you for taking time to request this feature. Before you start please have a look at our [contributing guidelines](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/blob/main/CONTRIBUTING.md#-feature-requests) on requesting features.
+
+        **Note:** If you have a question regarding the use of this plugin, do not create an issue. [Start a discussion](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/discussions/new?category=q-a) instead.
+  # ----- What problem are you trying to solve? -------------------------------
   - type: textarea
-    id: background-information
+    id: problem
     attributes:
-      label: Why are you proposing this feature?
-      description: A clear and concise description of the underlying scenario to be covered and what's missing today. Provide any relevant background information that helps explain why this feature would be beneficial.
+      label: What problem are you trying to solve?
+      description: "Describe the scenario: what are you trying to, and what's getting in the way today?"
+      placeholder: "Example: I'd like to have my coding agent fully manage my theming service instance on SAP BTP Cloud Foundry."
     validations:
       required: true
+  # ----- What would a good solution look like for you? -----------------------
   - type: textarea
-    id: possible-solution
+    id: solution
     attributes:
-      label: How should a possible solution look like?
-      description: A clear and concise description of what you want to happen.
+      label: What would a good solution look like for you?
+      description: If you have a specific idea in mind, share it here. Or just describe the outcome.
+      placeholder: "Example: A remote MCP server for the theming service via my application router that my coding agent could connect to."
+  # ----- Anything else to share? ---------------------------------------------
   - type: textarea
-    id: alternative-solution
+    id: anything-else
     attributes:
-      label: Are there alternative approaches?
-      description: A clear and concise description of any alternative solutions or features you've considered.
-  - type: textarea
-    id: additional-context
-    attributes:
-      label: Any further information you would like to share?
-      description: Add any other context or screenshots about the feature request here.
+      label: Anything else to share?
+      description: Screenshots, links, alternative approaches, related issues — anything that helps us understand the context.
