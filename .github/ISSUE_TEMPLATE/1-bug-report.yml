@@ -1,43 +1,33 @@
 name: Bug Report
-description: Report an issue related to the UI theme designer plugins for coding agents
+description: |
+  Report issues with UI theme designer plugins for coding agents, including
+  plugin installation problems, unexpected behavior, incorrect results, and
+  general usability or functionality issues.
 type: Bug
+labels:
+  - "🐛 Bug"
 body:
+  # ===== Title ===============================================================
   - type: markdown
     attributes:
       value: |
-        Please have a look at our [contributing guidelines](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/blob/main/CONTRIBUTING.md#-reporting-issues) on reporting issues.
-  - type: textarea
-    id: steps-to-reproduce
-    attributes:
-      label: What is the issue and how can we reproduce it?
-      description: |
-        To help us understand and resolve the issue efficiently, please provide a **minimal reproducible example** (required) and steps that clearly illustrate the unexpected behavior.
-      value: |
-        1. Install plugin ...
-        2. Ask the coding agent ...
-        3. ... --> **Issue:** ...
+        Thank you for taking time to report this issue. Before you start please have a look at our [contributing guidelines](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/blob/main/CONTRIBUTING.md#-reporting-issues) on reporting issues.
 
-        #### Error:
-        > ...
-
-        #### Expected behavior:
-        ...
-    validations:
-      required: true
-  - type: input
-    id: plugin
+        **Note:** If you have a question regarding the use of this plugin, do not create an issue. [Start a discussion](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/discussions/new?category=q-a) instead.
+  # ----- Problem -------------------------------------------------------------
+  - type: dropdown
     attributes:
-      label: Affected plugin
-      description: Which plugin is affected? (e.g. `ui-theme-designer`)
+      label: Problem
+      description: What kind of issue to you experience?
+      options:
+        - Incorrect results
+        - Unexpected behavior
+        - Problem installing the plugin
+        - General usability or functionality
+        - Something else
     validations:
       required: true
-  - type: input
-    id: agent
-    attributes:
-      label: Coding agent / version
-      description: Which coding agent (and version) did you use? (e.g. Claude Code 1.2.3)
-    validations:
-      required: true
+  # ----- Confirmation --------------------------------------------------------
   - type: checkboxes
     id: issue-checked
     attributes:
@@ -49,3 +39,145 @@ body:
           required: true
         - label: I am not disclosing any internal or sensitive information.
           required: true
+  # ===== Environment =========================================================
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        ### Environment
+  # ----- Operating System ----------------------------------------------------
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating System
+      description: Which operating system do you use?
+      options:
+        - macOS
+        - Windows
+        - Linux
+        - Something else
+    validations:
+      required: true
+  # ----- Operating System Version --------------------------------------------
+  - type: input
+    id: os-version
+    attributes:
+      label: Operating System Version
+      description: What is the version of your operating system?
+      placeholder: "Example: 26.5.1 (figure out e.g. with `sw_vers -productVersion`)"
+  # ----- Coding Agent --------------------------------------------------------
+  - type: dropdown
+    id: agent
+    attributes:
+      label: Coding Agent
+      description: Which coding agent do you use?
+      options:
+        - Claude Code
+        - Aider
+        - OpenCode
+        - Pi
+        - GitHub Copilot
+        - Cursor
+        - Windsurf
+        - Something else
+    validations:
+      required: true
+  # ----- Coding Agent Version ------------------------------------------------
+  - type: input
+    id: agent-version
+    attributes:
+      label: Coding Agent Version
+      description: What is the version of your coding agent?
+      placeholder: "Example: 2.1.179 (figure out e.g. with `claude --version`)"
+  # ----- LLM -----------------------------------------------------------------
+  - type: input
+    id: llm
+    attributes:
+      label: LLM
+      description: Which LLM did you use with your coding agent?
+      placeholder: "Example: claude-opus-4.8 (figure out e.g. with `/model` in a claude session)"
+  # ----- Coding Agent Plugins ------------------------------------------------
+  - type: textarea
+    id: plugins
+    attributes:
+      label: Coding Agent Plugins
+      description: Which coding agent plugins do you use?
+      placeholder: |
+        Example: the output of `claude plugin list`
+    validations:
+      required: true
+  # ----- Additional Environment Info -----------------------------------------
+  - type: textarea
+    id: environment
+    attributes:
+      label: Additional Environment Info
+      description: |
+        Do you have anything else in your environment that could have an
+        impact on this issue?
+      placeholder: |
+        Example: the output of `claude doctor`
+  # ===== Steps to reproduce ==================================================
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        ### Steps to reproduce
+  # ----- No user config ------------------------------------------------------
+  - type: checkboxes
+    id: no-config
+    attributes:
+      label: No Additional Config
+      description: I have reproduced this issue without any
+        additional configuration (e.g. temporarily renamed ~/.claude/CLAUDE.md
+        or ${workspaceRoot}/CLAUDE.md and ${workspaceRoot}/.claude).
+      options:
+        - label: I confirm I have reproduced this issue without any additional configuration
+          required: true
+  # ----- Steps To Reproduce --------------------------------------------------
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps To Reproduce
+      description: |
+        What are the **minimally required steps** to reproduce your issue?
+      placeholder: |
+        Example: In a new claude session, ask "Which SAP design token would best be used for the background of my hovered buttons?".
+    validations:
+      required: true
+  # ----- Expected Result -----------------------------------------------------
+  - type: textarea
+    id: expected-result
+    attributes:
+      label: Expected Result
+      description: |
+        What did you expect?
+      placeholder: |
+        Example: Claude suggests `sapButton_Hover_Background`.
+    validations:
+      required: true
+  # ----- Actual Result -------------------------------------------------------
+  - type: textarea
+    id: actual-result
+    attributes:
+      label: Actual Result
+      description: |
+        What happened instead?
+      placeholder: |
+        Example: Claude doesn't even consider the `/ui-theme-designer:design-tokens` skill, digs into random documentation, suggests design tokens of other design systems.
+    validations:
+      required: true
+  # ===== Anything Else =======================================================
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        ### Anything Else
+  # ----- Comment -------------------------------------------------------------
+  - type: textarea
+    id: comment
+    attributes:
+      label: Comment
+      description: |
+        Anything else you want to share with us?
+      placeholder: |
+        Example: Hi SAP, thank you for providing this plugin. Too bad claude is skewed towards a different design system. Best, Me
