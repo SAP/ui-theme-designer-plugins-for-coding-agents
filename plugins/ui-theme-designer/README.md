@@ -54,7 +54,7 @@ Examples showing in which situations the UI Theme Designer plugin can help you.
 
 ### Develop a Custom Component Using Design Tokens of Similar Components
 
-**Situation:** You are building a custom component library and want to add a new component that looks consistent with the SAP Design System. The UI technology doesn't matter — this works with UI5, Web Components, or any other framework. To make the component themable, you want to reuse the SAP theming parameters that standard components of the same type already use.
+**Situation:** You are building a custom component library and want to add a new component that looks consistent with the SAP Design System. The UI technology doesn't matter — this works with UI5, UI5 Web Components, or any other framework. To make the component themable, you want to reuse the SAP design tokens that standard components of the same type already use.
 
 **Example:** You want to build a `ThemeCard` component that displays a preview of an SAP theme. Instead of guessing which parameters to use, ask:
 
