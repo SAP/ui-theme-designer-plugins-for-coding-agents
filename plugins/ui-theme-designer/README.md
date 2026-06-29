@@ -46,3 +46,28 @@ If your coding agent doesn't support plugins, install the skills directly using 
 ```bash
 npx skills add SAP/ui-theme-designer-plugins-for-coding-agents
 ```
+
+
+## Examples
+
+Examples showing in which situations the UI Theme Designer plugin can help you.
+
+### Develop a Custom Component Using Design Tokens of Similar Components
+
+**Situation:** You are building a custom component library and want to add a new component that looks consistent with the SAP Design System. The UI technology doesn't matter — this works with UI5, Web Components, or any other framework. To make the component themable, you want to reuse the SAP theming parameters that standard components of the same type already use.
+
+**Example:** You want to build a `ThemeCard` component that displays a preview of an SAP theme. Instead of guessing which parameters to use, ask:
+
+> _"I want to develop a card control to display a preview of a SAP theme. Please list existing card parameters I can use in the CSS."_
+
+**Result:** The agent returns the theming parameters that the UI5 Web Components `Card` uses, grouped by purpose. UI5 Web Components serve as the reference implementation of the SAP Design System, so the skill defaults to them when no UI framework is specified — for example:
+
+| Purpose | Parameters |
+|---|---|
+| Background & border | `--sapTile_Background`, `--sapTile_BorderColor`, `--sapTile_BorderCornerRadius` |
+| Elevation | `--sapContent_Shadow0` (default), `--sapContent_Shadow2` (hover) |
+| Title text | `--sapGroup_TitleTextColor`, `--sapFontHeaderFamily`, `--sapFontHeader6Size` |
+| Header separator | `--sapTile_SeparatorColor` |
+| Focus ring | `--sapContent_FocusColor`, `--sapContent_FocusWidth`, `--sapContent_FocusStyle` |
+
+You can use this list directly in your CSS, reference it in a feature description ("the ThemeCard should look like standard cards"), or let the agent propose a full CSS implementation based on it.
