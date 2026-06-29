@@ -44,7 +44,12 @@ Read `references/theming-repository-layout.md` for the layout of `.theming` file
 
 1. Read `overview-of-sap-theming-content-91ebfe2.md`
 2. Determine the SAP theme the users question targets, present the available theme IDs from `theming-base-content/content/Base/baseLib` as select options if unclear, default to `sap_horizon`
-3. Determine the framework the users question targets, present "UI5" (to focus on `openui5`), "UI5 Web components" (focus on `webcomponents`), "Fundamental Styles" (focus on `fundamental-styles`) and "Other" (to focus on `theming-base-content`) as select options if unclear, default to "Other"
+3. Determine the framework the user's question targets. Present "UI5" (to focus on `openui5`), "UI5 Web Components" (focus on `webcomponents`), "Fundamental Styles" (focus on `fundamental-styles`) and "Other" (to focus on `theming-base-content`) as select options if unclear, applying these defaults:
+   - **Specific component, no framework stated** → default to "UI5 Web Components":
+     1. Search `webcomponents` for a CSS file matching the component name
+     2. **If found:** use it as the primary source; additionally search `theming-base-content` for parameters matching `sap<ComponentName>_*`; report any such parameters not already referenced in the webcomponents CSS as supplementary, labelled "defined in theming-base-content, not yet referenced in webcomponents CSS" (covers new or not-yet-wired parameters); report only `theming-base-content` parameters — do not surface internal webcomponents CSS custom properties
+     3. **If not found in `webcomponents`:** fall back to `theming-base-content` parameters containing the component name as the sole source
+   - **No specific component** → default to "Other"
 4. Read the `.theming` file of the framework the users question targets, determine `sBaseLibraryId` and `sSourcePathPattern`
 5. Read the `.theming` file of the theme of the `sBaseLibrary` of the framework the users question targets, based on `sSourcePathPattern` of the frameworks `.theming` file
 6. While there is an `oExtends`:
