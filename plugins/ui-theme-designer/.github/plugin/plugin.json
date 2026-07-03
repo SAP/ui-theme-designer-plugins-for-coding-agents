@@ -1,0 +1,32 @@
+{
+    "name": "ui-theme-designer",
+    "version": "1.1.0",
+    "description": "Plugin for coding agents working with UI theme designer. Bundles two skills: how-to and conceptual answers about UI theme designer on BTP, and questions about the SAP Design System and SAP Fiori design tokens — theme parameters and component-level parameter usage in UI5, UI5 Web Components, and Fundamental Styles.",
+    "author": {
+        "name": "SAP SE",
+        "url": "https://www.sap.com"
+    },
+    "homepage": "https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents",
+    "repository": "https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents",
+    "license": "Apache-2.0",
+    "keywords": [
+        "sap",
+        "theming",
+        "fiori",
+        "design-tokens",
+        "ui-theme-designer",
+        "ui5",
+        "ui5-web-components",
+        "fundamental-styles",
+        "plugin"
+    ],
+    "skills": [
+        "./skills/help",
+        "./skills/design-tokens"
+    ],
+    "source": {
+        "source": "github",
+        "repo": "SAP/ui-theme-designer-plugins-for-coding-agents",
+        "path": "plugins/ui-theme-designer"
+    }
+}

@@ -67,7 +67,12 @@
             "extra-files": [
                 {
                     "type": "json",
-                    "path": "plugins/ui-theme-designer/.claude-plugin/plugin.json",
+                    "path": "plugins/ui-theme-designer/plugin.json",
+                    "jsonpath": "$..version"
+                },
+                {
+                    "type": "json",
+                    "path": "plugins/ui-theme-designer/.github/plugin/plugin.json",
                     "jsonpath": "$..version"
                 }
             ]
