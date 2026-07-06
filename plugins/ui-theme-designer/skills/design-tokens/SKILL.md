@@ -17,24 +17,8 @@ _(all paths below are relative to the folder that contains this SKILL.md)_
    git -C theming-base-content sparse-checkout set content/
    git -C theming-base-content checkout
    ```
-3. `openui5` exists; if not:
-   ```sh
-   git clone --depth 1 --filter=blob:none --no-checkout https://github.com/UI5/openui5 openui5
-   git -C openui5 sparse-checkout set --no-cone 'src/themelib_sap_horizon/**/themes/' 'src/themelib_sap_fiori_3/**/themes/' 'src/sap.*/**/themes/base/'
-   git -C openui5 checkout
-   ```
-4. `webcomponents` exists; if not:
-   ```sh
-   git clone --depth 1 --filter=blob:none --no-checkout https://github.com/UI5/webcomponents webcomponents
-   git -C webcomponents sparse-checkout set --no-cone 'packages/*/src/themes/**/*.css' '!packages/theming/**/*.css'
-   git -C webcomponents checkout
-   ```
-5. `fundamental-styles` exists; if not:
-   ```sh
-   git clone --depth 1 --filter=blob:none --no-checkout https://github.com/SAP/fundamental-styles fundamental-styles
-   git -C fundamental-styles sparse-checkout set --no-cone 'packages/*/src/**/*.scss' '!packages/doc-ui/**/*.scss'
-   git -C fundamental-styles checkout
-   ```
+
+The remaining framework repositories (`openui5`, `webcomponents`, `fundamental-styles`) are cloned lazily in step 3, only if the user's question targets them.
 
 ## Context
 
@@ -46,10 +30,31 @@ Read `references/theming-repository-layout.md` for the layout of `.theming` file
 2. Determine the SAP theme the users question targets, present the available theme IDs from `theming-base-content/content/Base/baseLib` as select options if unclear, default to `sap_horizon`
 3. Determine the framework the user's question targets. Present "UI5" (to focus on `openui5`), "UI5 Web Components" (focus on `webcomponents`), "Fundamental Styles" (focus on `fundamental-styles`) and "Other" (to focus on `theming-base-content`) as select options if unclear, applying these defaults:
    - **Specific component, no framework stated** → default to "UI5 Web Components":
-     1. Search `webcomponents` for a CSS file matching the component name
+     1. Clone `webcomponents` lazily (see below), then search it for a CSS file matching the component name
      2. **If found:** use it as the primary source; additionally search `theming-base-content` for parameters matching `sap<ComponentName>_*`; report any such parameters not already referenced in the webcomponents CSS as supplementary, labelled "defined in theming-base-content, not yet referenced in webcomponents CSS" (covers new or not-yet-wired parameters); report only `theming-base-content` parameters — do not surface internal webcomponents CSS custom properties
      3. **If not found in `webcomponents`:** fall back to `theming-base-content` parameters containing the component name as the sole source
    - **No specific component** → default to "Other"
+
+   Once the framework is settled, ensure the corresponding repository exists; if not, clone it lazily:
+   - **UI5** → `openui5`:
+     ```sh
+     git clone --depth 1 --filter=blob:none --no-checkout https://github.com/UI5/openui5 openui5
+     git -C openui5 sparse-checkout set --no-cone 'src/themelib_sap_horizon/**/themes/' 'src/themelib_sap_fiori_3/**/themes/' 'src/sap.*/**/themes/base/'
+     git -C openui5 checkout
+     ```
+   - **UI5 Web Components** → `webcomponents`:
+     ```sh
+     git clone --depth 1 --filter=blob:none --no-checkout https://github.com/UI5/webcomponents webcomponents
+     git -C webcomponents sparse-checkout set --no-cone 'packages/*/src/themes/**/*.css' '!packages/theming/**/*.css'
+     git -C webcomponents checkout
+     ```
+   - **Fundamental Styles** → `fundamental-styles`:
+     ```sh
+     git clone --depth 1 --filter=blob:none --no-checkout https://github.com/SAP/fundamental-styles fundamental-styles
+     git -C fundamental-styles sparse-checkout set --no-cone 'packages/*/src/**/*.scss' '!packages/doc-ui/**/*.scss'
+     git -C fundamental-styles checkout
+     ```
+   - **Other** → no additional clone; `theming-base-content` is already available from Prerequisites
 4. Read the `.theming` file of the framework the users question targets, determine `sBaseLibraryId` and `sSourcePathPattern`
 5. Read the `.theming` file of the theme of the `sBaseLibrary` of the framework the users question targets, based on `sSourcePathPattern` of the frameworks `.theming` file
 6. While there is an `oExtends`:
