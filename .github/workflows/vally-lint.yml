@@ -1,0 +1,32 @@
+name: vally-lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  vally-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+
+      - name: Run vally lint
+        run: |
+          EXIT_CODE=0
+          for skill_dir in plugins/*/skills/*/; do
+            [ -d "$skill_dir" ] || continue
+            echo "### Linting $skill_dir"
+            set +e
+            npx --yes @microsoft/vally-cli lint "$skill_dir" --verbose
+            CMD_EXIT=$?
+            set -e
+            [ "$CMD_EXIT" -ne 0 ] && EXIT_CODE=1
+          done
+          exit $EXIT_CODE
