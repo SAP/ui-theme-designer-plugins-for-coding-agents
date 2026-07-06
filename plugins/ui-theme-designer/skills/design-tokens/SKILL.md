@@ -22,7 +22,7 @@ The remaining framework repositories (`openui5`, `webcomponents`, `fundamental-s
 
 ## Context
 
-Read `references/theming-repository-layout.md` for the layout of `.theming` files, the theme repository structure, and where each framework's themes live across `theming-base-content`, `openui5`, `webcomponents`, and `fundamental-styles`.
+Read [references/theming-repository-layout.md](references/theming-repository-layout.md) for the layout of `.theming` files, the theme repository structure, and where each framework's themes live across `theming-base-content`, `openui5`, `webcomponents`, and `fundamental-styles`.
 
 ## Procedure
 
@@ -69,6 +69,6 @@ Read `references/theming-repository-layout.md` for the layout of `.theming` file
    2. If an annotation already exists: append the value to the existing annotation values
    3. If an annotation has values for which it also has "anti-values" (the same value but starting with a `!`, e.g. "Protected" and "!Protected"), remove both values from the values list
    4. If an annotation values list is empty, remove the annotation
-10. If the user targets "UI5 Web Components", for each relevant component look up the three CSS sources documented in `references/theming-repository-layout.md`: the theme-independent skeleton at `webcomponents/packages/*/src/themes/<component>.css`, merged with the always-used base parameters at `webcomponents/packages/*/src/themes/base/<component>-parameters.css`, then with the theme-specific delta at `webcomponents/packages/*/src/themes/<theme>/<component>-parameters.css`
+10. If the user targets "UI5 Web Components", for each relevant component look up the three CSS sources documented in [references/theming-repository-layout.md](references/theming-repository-layout.md): the theme-independent skeleton at `webcomponents/packages/*/src/themes/<component>.css`, merged with the always-used base parameters at `webcomponents/packages/*/src/themes/base/<component>-parameters.css`, then with the theme-specific delta at `webcomponents/packages/*/src/themes/<theme>/<component>-parameters.css`
 11. If the user targets "Fundamental Styles", scan `fundamental-styles/packages/*/src/**/*.scss` for the relevant component; theme-specific values come from the CSS custom properties in `theming-base-content/content/Base/baseLib/<theme>/css_variables.css`
 12. Answer the users question based on the information collected
