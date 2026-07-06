@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/compare/v1.2.0...v1.2.1) (2026-07-06)
+
+
+### Bug Fixes
+
+* vally orphan-files lint error in design-tokens skill ([#20](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/issues/20)) ([6bd103e](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/commit/6bd103e34d198620a077231e44fa070722cfc34b))
+
 ## [1.2.0](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/compare/v1.1.0...v1.2.0) (2026-07-06)
 
 
