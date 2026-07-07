@@ -13,9 +13,10 @@ _(all paths below are relative to the folder that contains this SKILL.md)_
 `btp-ui-theme-designer/docs/cf` exists; if not:
 
 ```sh
-git clone --depth 1 --filter=blob:none --no-checkout --sparse https://github.com/SAP-docs/btp-ui-theme-designer
+git clone --filter=blob:none --no-checkout --sparse https://github.com/SAP-docs/btp-ui-theme-designer
+git -C btp-ui-theme-designer fetch --depth 1 origin 8873dc4ca7ea93654867bf06ed5dd5308c7a7e98
 git -C btp-ui-theme-designer sparse-checkout set docs/cf/
-git -C btp-ui-theme-designer checkout
+git -C btp-ui-theme-designer checkout 8873dc4ca7ea93654867bf06ed5dd5308c7a7e98
 ```
 
 ## Procedure
