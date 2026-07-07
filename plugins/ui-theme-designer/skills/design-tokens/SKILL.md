@@ -54,17 +54,17 @@ Read [references/theming-repository-layout.md](references/theming-repository-lay
        git -C openui5 fetch --depth 1 origin 1.150.0
        git -C openui5 checkout 1.150.0
        ```
-   - **UI5 Web Components** → `webcomponents` at tag `v0.33.0`:
+   - **UI5 Web Components** → `webcomponents` at tag `v2.24.0`:
      - Directory does not exist → clone it:
        ```sh
-       git clone --depth 1 --branch v0.33.0 --filter=blob:none --no-checkout https://github.com/UI5/webcomponents webcomponents
+       git clone --depth 1 --branch v2.24.0 --filter=blob:none --no-checkout https://github.com/UI5/webcomponents webcomponents
        git -C webcomponents sparse-checkout set --no-cone 'packages/*/src/themes/**/*.css' '!packages/theming/**/*.css'
        git -C webcomponents checkout
        ```
      - Directory exists but `git -C webcomponents describe --tags --exact-match` differs → update it:
        ```sh
-       git -C webcomponents fetch --depth 1 origin v0.33.0
-       git -C webcomponents checkout v0.33.0
+       git -C webcomponents fetch --depth 1 origin v2.24.0
+       git -C webcomponents checkout v2.24.0
        ```
    - **Fundamental Styles** → `fundamental-styles` at tag `v0.41.8`:
      - Directory does not exist → clone it:
