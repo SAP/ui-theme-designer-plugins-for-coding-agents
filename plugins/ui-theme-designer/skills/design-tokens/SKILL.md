@@ -13,7 +13,7 @@ _(all paths below are relative to the folder that contains this SKILL.md)_
 1. `overview-of-sap-theming-content-91ebfe2.md` exists; if not: fetch https://raw.githubusercontent.com/SAP-docs/btp-ui-theme-designer/main/docs/cf/About-Themes/overview-of-sap-theming-content-91ebfe2.md into that file
 2. `theming-base-content/` exists; if not:
    ```sh
-   git clone --depth 1 --filter=blob:none --no-checkout --sparse https://github.com/SAP/theming-base-content theming-base-content
+   git clone --depth 1 --branch 11.36.4 --filter=blob:none --no-checkout --sparse https://github.com/SAP/theming-base-content theming-base-content
    git -C theming-base-content sparse-checkout set content/
    git -C theming-base-content checkout
    ```
@@ -38,19 +38,19 @@ Read [references/theming-repository-layout.md](references/theming-repository-lay
    Once the framework is settled, ensure the corresponding repository exists; if not, clone it lazily:
    - **UI5** → `openui5`:
      ```sh
-     git clone --depth 1 --filter=blob:none --no-checkout https://github.com/UI5/openui5 openui5
+     git clone --depth 1 --branch 1.150.0 --filter=blob:none --no-checkout https://github.com/UI5/openui5 openui5
      git -C openui5 sparse-checkout set --no-cone 'src/themelib_sap_horizon/**/themes/' 'src/themelib_sap_fiori_3/**/themes/' 'src/sap.*/**/themes/base/'
      git -C openui5 checkout
      ```
    - **UI5 Web Components** → `webcomponents`:
      ```sh
-     git clone --depth 1 --filter=blob:none --no-checkout https://github.com/UI5/webcomponents webcomponents
+     git clone --depth 1 --branch v0.33.0 --filter=blob:none --no-checkout https://github.com/UI5/webcomponents webcomponents
      git -C webcomponents sparse-checkout set --no-cone 'packages/*/src/themes/**/*.css' '!packages/theming/**/*.css'
      git -C webcomponents checkout
      ```
    - **Fundamental Styles** → `fundamental-styles`:
      ```sh
-     git clone --depth 1 --filter=blob:none --no-checkout https://github.com/SAP/fundamental-styles fundamental-styles
+     git clone --depth 1 --branch v0.41.8 --filter=blob:none --no-checkout https://github.com/SAP/fundamental-styles fundamental-styles
      git -C fundamental-styles sparse-checkout set --no-cone 'packages/*/src/**/*.scss' '!packages/doc-ui/**/*.scss'
      git -C fundamental-styles checkout
      ```
