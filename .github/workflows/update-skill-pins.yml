@@ -95,39 +95,47 @@ jobs:
           CURRENT_BTP=$(grep -oP '(?<=fetch --depth 1 origin )[0-9a-f]{40}' plugins/ui-theme-designer/skills/help/SKILL.md | head -1)
 
           echo "theming_base_content=$(latest_mature_tag SAP/theming-base-content "$CURRENT_TBC")" >> "$GITHUB_OUTPUT"
+          echo "theming_base_content_current=$CURRENT_TBC" >> "$GITHUB_OUTPUT"
           echo "openui5=$(latest_mature_tag UI5/openui5 "$CURRENT_OUI5")" >> "$GITHUB_OUTPUT"
+          echo "openui5_current=$CURRENT_OUI5" >> "$GITHUB_OUTPUT"
           echo "webcomponents=$(latest_mature_tag UI5/webcomponents "$CURRENT_WC")" >> "$GITHUB_OUTPUT"
+          echo "webcomponents_current=$CURRENT_WC" >> "$GITHUB_OUTPUT"
           echo "fundamental_styles=$(latest_mature_tag SAP/fundamental-styles "$CURRENT_FS")" >> "$GITHUB_OUTPUT"
+          echo "fundamental_styles_current=$CURRENT_FS" >> "$GITHUB_OUTPUT"
           echo "btp_ui_theme_designer=$(latest_mature_sha SAP-docs/btp-ui-theme-designer "$CURRENT_BTP")" >> "$GITHUB_OUTPUT"
+          echo "btp_ui_theme_designer_current=$CURRENT_BTP" >> "$GITHUB_OUTPUT"
 
       - name: Update design-tokens SKILL.md
         env:
           THEMING_BASE_CONTENT: ${{ steps.resolve.outputs.theming_base_content }}
+          THEMING_BASE_CONTENT_CURRENT: ${{ steps.resolve.outputs.theming_base_content_current }}
           OPENUI5: ${{ steps.resolve.outputs.openui5 }}
+          OPENUI5_CURRENT: ${{ steps.resolve.outputs.openui5_current }}
           WEBCOMPONENTS: ${{ steps.resolve.outputs.webcomponents }}
+          WEBCOMPONENTS_CURRENT: ${{ steps.resolve.outputs.webcomponents_current }}
           FUNDAMENTAL_STYLES: ${{ steps.resolve.outputs.fundamental_styles }}
+          FUNDAMENTAL_STYLES_CURRENT: ${{ steps.resolve.outputs.fundamental_styles_current }}
         run: |
           FILE=plugins/ui-theme-designer/skills/design-tokens/SKILL.md
-
-          # theming-base-content: --branch X.Y.Z
-          sed -i "s|--branch [0-9]\+\.[0-9]\+\.[0-9]\+ --filter=blob:none --no-checkout --sparse https://github.com/SAP/theming-base-content|--branch $THEMING_BASE_CONTENT --filter=blob:none --no-checkout --sparse https://github.com/SAP/theming-base-content|" "$FILE"
-
-          # openui5: --branch X.Y.Z
-          sed -i "s|--branch [0-9]\+\.[0-9]\+\.[0-9]\+ --filter=blob:none --no-checkout https://github.com/UI5/openui5|--branch $OPENUI5 --filter=blob:none --no-checkout https://github.com/UI5/openui5|" "$FILE"
-
-          # webcomponents: --branch vX.Y.Z
-          sed -i "s|--branch v[0-9]\+\.[0-9]\+\.[0-9]\+ --filter=blob:none --no-checkout https://github.com/UI5/webcomponents|--branch $WEBCOMPONENTS --filter=blob:none --no-checkout https://github.com/UI5/webcomponents|" "$FILE"
-
-          # fundamental-styles: --branch vX.Y.Z
-          sed -i "s|--branch v[0-9]\+\.[0-9]\+\.[0-9]\+ --filter=blob:none --no-checkout https://github.com/SAP/fundamental-styles|--branch $FUNDAMENTAL_STYLES --filter=blob:none --no-checkout https://github.com/SAP/fundamental-styles|" "$FILE"
+          # Each sed is anchored to lines that mention the repo directory name,
+          # so identical version strings across repos never collide.
+          [ "$THEMING_BASE_CONTENT" != "$THEMING_BASE_CONTENT_CURRENT" ] && \
+            sed -i "/theming-base-content/ s|${THEMING_BASE_CONTENT_CURRENT}|${THEMING_BASE_CONTENT}|g" "$FILE"
+          [ "$OPENUI5" != "$OPENUI5_CURRENT" ] && \
+            sed -i "/openui5/ s|${OPENUI5_CURRENT}|${OPENUI5}|g" "$FILE"
+          [ "$WEBCOMPONENTS" != "$WEBCOMPONENTS_CURRENT" ] && \
+            sed -i "/webcomponents/ s|${WEBCOMPONENTS_CURRENT}|${WEBCOMPONENTS}|g" "$FILE"
+          [ "$FUNDAMENTAL_STYLES" != "$FUNDAMENTAL_STYLES_CURRENT" ] && \
+            sed -i "/fundamental-styles/ s|${FUNDAMENTAL_STYLES_CURRENT}|${FUNDAMENTAL_STYLES}|g" "$FILE"
 
       - name: Update help SKILL.md
         env:
           SHA: ${{ steps.resolve.outputs.btp_ui_theme_designer }}
+          SHA_CURRENT: ${{ steps.resolve.outputs.btp_ui_theme_designer_current }}
         run: |
           FILE=plugins/ui-theme-designer/skills/help/SKILL.md
-          sed -i "s|fetch --depth 1 origin [0-9a-f]\{40\}|fetch --depth 1 origin $SHA|g" "$FILE"
-          sed -i "s|checkout [0-9a-f]\{40\}|checkout $SHA|g" "$FILE"
+          [ "$SHA" != "$SHA_CURRENT" ] && \
+            sed -i "s|${SHA_CURRENT}|${SHA}|g" "$FILE"
 
       - name: Check for changes
         id: diff
