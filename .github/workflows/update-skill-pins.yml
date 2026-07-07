@@ -1,0 +1,175 @@
+name: Update skill repository pins
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'  # every Monday at 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-pins:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve latest tags and commits
+        id: resolve
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MIN_AGE_DAYS: 7
+        run: |
+          # Returns the commit date (ISO 8601) for a given owner/repo and ref (tag name or SHA).
+          # Uses the GitHub API: tag ref → tagged object SHA → commit date.
+          commit_date() {
+            local owner_repo="$1" ref="$2"
+            local object_sha object_type
+            # Resolve the ref to its object (works for both annotated and lightweight tags)
+            read object_type object_sha < <(
+              gh api "repos/$owner_repo/git/ref/tags/$ref" \
+                --jq '[.object.type, .object.sha] | @tsv' 2>/dev/null \
+              || echo "commit $ref"
+            )
+            if [ "$object_type" = "tag" ]; then
+              # Annotated tag: dereference to the commit it points at
+              object_sha=$(gh api "repos/$owner_repo/git/tags/$object_sha" --jq '.object.sha')
+            fi
+            gh api "repos/$owner_repo/commits/$object_sha" --jq '.commit.committer.date'
+          }
+
+          # Returns the latest semver tag (vX.Y.Z or X.Y.Z, no pre-releases) for owner/repo
+          # that is at least MIN_AGE_DAYS old. Falls back to the currently pinned tag if none qualify.
+          latest_mature_tag() {
+            local owner_repo="$1" current="$2"
+            local cutoff min_age_secs tag date_str date_secs
+            min_age_secs=$(( MIN_AGE_DAYS * 86400 ))
+            cutoff=$(( $(date +%s) - min_age_secs ))
+
+            git ls-remote --tags "https://github.com/$owner_repo" \
+              | grep -v '\^{}' \
+              | awk '{print $2}' \
+              | sed 's|refs/tags/||' \
+              | grep -E "^v?[0-9]+\.[0-9]+\.[0-9]+$" \
+              | sort -t. -k1,1n -k2,2n -k3,3n \
+              | tail -20 \
+              | tac \
+            | while IFS= read -r tag; do
+                date_str=$(commit_date "$owner_repo" "$tag")
+                date_secs=$(date -d "$date_str" +%s 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%SZ" "$date_str" +%s)
+                if [ "$date_secs" -le "$cutoff" ]; then
+                  echo "$tag"
+                  break
+                else
+                  echo "Skipping $tag (too recent: $date_str)" >&2
+                fi
+              done \
+            | grep . || echo "$current"
+          }
+
+          # Returns the HEAD SHA of owner/repo if it is at least MIN_AGE_DAYS old,
+          # otherwise returns the currently pinned SHA.
+          latest_mature_sha() {
+            local owner_repo="$1" current="$2"
+            local min_age_secs cutoff sha date_str date_secs
+            min_age_secs=$(( MIN_AGE_DAYS * 86400 ))
+            cutoff=$(( $(date +%s) - min_age_secs ))
+
+            sha=$(git ls-remote "https://github.com/$owner_repo" HEAD | awk '{print $1}')
+            date_str=$(gh api "repos/$owner_repo/commits/$sha" --jq '.commit.committer.date')
+            date_secs=$(date -d "$date_str" +%s 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%SZ" "$date_str" +%s)
+            if [ "$date_secs" -le "$cutoff" ]; then
+              echo "$sha"
+            else
+              echo "Skipping HEAD $sha (too recent: $date_str)" >&2
+              echo "$current"
+            fi
+          }
+
+          # Read currently pinned values from skill files so we can fall back to them
+          CURRENT_TBC=$(grep -oP '(?<=--branch )\S+(?= --filter=blob:none --no-checkout --sparse https://github\.com/SAP/theming-base-content)' plugins/ui-theme-designer/skills/design-tokens/SKILL.md)
+          CURRENT_OUI5=$(grep -oP '(?<=--branch )\S+(?= --filter=blob:none --no-checkout https://github\.com/UI5/openui5)' plugins/ui-theme-designer/skills/design-tokens/SKILL.md)
+          CURRENT_WC=$(grep -oP '(?<=--branch )\S+(?= --filter=blob:none --no-checkout https://github\.com/UI5/webcomponents)' plugins/ui-theme-designer/skills/design-tokens/SKILL.md)
+          CURRENT_FS=$(grep -oP '(?<=--branch )\S+(?= --filter=blob:none --no-checkout https://github\.com/SAP/fundamental-styles)' plugins/ui-theme-designer/skills/design-tokens/SKILL.md)
+          CURRENT_BTP=$(grep -oP '(?<=fetch --depth 1 origin )[0-9a-f]{40}' plugins/ui-theme-designer/skills/help/SKILL.md | head -1)
+
+          echo "theming_base_content=$(latest_mature_tag SAP/theming-base-content "$CURRENT_TBC")" >> "$GITHUB_OUTPUT"
+          echo "openui5=$(latest_mature_tag UI5/openui5 "$CURRENT_OUI5")" >> "$GITHUB_OUTPUT"
+          echo "webcomponents=$(latest_mature_tag UI5/webcomponents "$CURRENT_WC")" >> "$GITHUB_OUTPUT"
+          echo "fundamental_styles=$(latest_mature_tag SAP/fundamental-styles "$CURRENT_FS")" >> "$GITHUB_OUTPUT"
+          echo "btp_ui_theme_designer=$(latest_mature_sha SAP-docs/btp-ui-theme-designer "$CURRENT_BTP")" >> "$GITHUB_OUTPUT"
+
+      - name: Update design-tokens SKILL.md
+        env:
+          THEMING_BASE_CONTENT: ${{ steps.resolve.outputs.theming_base_content }}
+          OPENUI5: ${{ steps.resolve.outputs.openui5 }}
+          WEBCOMPONENTS: ${{ steps.resolve.outputs.webcomponents }}
+          FUNDAMENTAL_STYLES: ${{ steps.resolve.outputs.fundamental_styles }}
+        run: |
+          FILE=plugins/ui-theme-designer/skills/design-tokens/SKILL.md
+
+          # theming-base-content: --branch X.Y.Z
+          sed -i "s|--branch [0-9]\+\.[0-9]\+\.[0-9]\+ --filter=blob:none --no-checkout --sparse https://github.com/SAP/theming-base-content|--branch $THEMING_BASE_CONTENT --filter=blob:none --no-checkout --sparse https://github.com/SAP/theming-base-content|" "$FILE"
+
+          # openui5: --branch X.Y.Z
+          sed -i "s|--branch [0-9]\+\.[0-9]\+\.[0-9]\+ --filter=blob:none --no-checkout https://github.com/UI5/openui5|--branch $OPENUI5 --filter=blob:none --no-checkout https://github.com/UI5/openui5|" "$FILE"
+
+          # webcomponents: --branch vX.Y.Z
+          sed -i "s|--branch v[0-9]\+\.[0-9]\+\.[0-9]\+ --filter=blob:none --no-checkout https://github.com/UI5/webcomponents|--branch $WEBCOMPONENTS --filter=blob:none --no-checkout https://github.com/UI5/webcomponents|" "$FILE"
+
+          # fundamental-styles: --branch vX.Y.Z
+          sed -i "s|--branch v[0-9]\+\.[0-9]\+\.[0-9]\+ --filter=blob:none --no-checkout https://github.com/SAP/fundamental-styles|--branch $FUNDAMENTAL_STYLES --filter=blob:none --no-checkout https://github.com/SAP/fundamental-styles|" "$FILE"
+
+      - name: Update help SKILL.md
+        env:
+          SHA: ${{ steps.resolve.outputs.btp_ui_theme_designer }}
+        run: |
+          FILE=plugins/ui-theme-designer/skills/help/SKILL.md
+          sed -i "s|fetch --depth 1 origin [0-9a-f]\{40\}|fetch --depth 1 origin $SHA|g" "$FILE"
+          sed -i "s|checkout [0-9a-f]\{40\}|checkout $SHA|g" "$FILE"
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            git diff --stat
+          fi
+
+      - name: Open pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          THEMING_BASE_CONTENT: ${{ steps.resolve.outputs.theming_base_content }}
+          OPENUI5: ${{ steps.resolve.outputs.openui5 }}
+          WEBCOMPONENTS: ${{ steps.resolve.outputs.webcomponents }}
+          FUNDAMENTAL_STYLES: ${{ steps.resolve.outputs.fundamental_styles }}
+          BTP_UI_THEME_DESIGNER: ${{ steps.resolve.outputs.btp_ui_theme_designer }}
+        run: |
+          BRANCH="update-skill-pins-$(date +%Y%m%d)"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add plugins/ui-theme-designer/skills/design-tokens/SKILL.md \
+                  plugins/ui-theme-designer/skills/help/SKILL.md
+          git commit -m "build: update pinned skill repository versions"
+          git push origin "$BRANCH"
+          gh pr create \
+            --title "build: update pinned skill repository versions" \
+            --body "$(cat <<EOF
+          This PR updates the pinned repository versions in the ui-theme-designer skill files.
+
+          | Repository | New version |
+          |---|---|
+          | SAP/theming-base-content | \`$THEMING_BASE_CONTENT\` |
+          | UI5/openui5 | \`$OPENUI5\` |
+          | UI5/webcomponents | \`$WEBCOMPONENTS\` |
+          | SAP/fundamental-styles | \`$FUNDAMENTAL_STYLES\` |
+          | SAP-docs/btp-ui-theme-designer | \`${BTP_UI_THEME_DESIGNER:0:7}\` |
+          EOF
+          )" \
+            --label "build" \
+            --head "$BRANCH"
