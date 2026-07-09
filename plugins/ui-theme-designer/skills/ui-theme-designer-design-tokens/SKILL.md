@@ -6,49 +6,51 @@ allowed-tools: Bash(npm ci) Read WebFetch
 
 # Design Tokens
 
-_(all paths below are relative to the folder that contains this SKILL.md)_
+_With `$THIS` being the folder that contains this SKILL.md:_
 
 ## Prerequisite
 
-`node_modules/` exists and is not older than 7 days; if not: `npm ci`
+`$THIS/node_modules/` exists and is not older than 7 days; if not: `cd $THIS && npm ci`
 
 ## Context
 
-Design Tokens are defined in LESS files of the theming-base-content, and consumed in LESS and CSS files of different UI technologies. In `node_modules/` you find the following UI technologies:
+Design Tokens are defined in LESS files of the theming-base-content, and consumed in LESS and CSS files of different frameworks (= UI technologies). In `$THIS/node_modules/` you find the following:
 
 - **UI5:** (with `$LIBRARY` being e.g. `sap.ui.core`, and `$THEME` being e.g. `sap_horizon`)
-   - `node_modules/@openui5/$LIBRARY/src/${LIBRARY/./\//}/**/themes/base` contains the `baseTheme` of the different libraries
-   - `node_modules/@openui5/themelib_$THEME/src/${LIBRARY/./\//}/themes/` contains the `$THEME` of the different libraries
+   - `$THIS/node_modules/@openui5/$LIBRARY/src/${LIBRARY/./\//}/**/themes/base` contains the `baseTheme` of the different libraries
+   - `$THIS/node_modules/@openui5/themelib_$THEME/src/${LIBRARY/./\//}/themes/` contains the `$THEME` of the different libraries
 - **UI5 Web Components:** (with `$THEME` being e.g. `sap_horizon`, and `$COMPONENT` being e.g. `Button`)
-   - `node_modules/@ui5/*/src/themes/$COMPONENT.css` contains theme-independent component skeleton CSS, using parameters from theming-base-content as CSS custom properties, as well as CSS custom properties defined in `base/` (see below)
-   - `node_modules/@ui5/*/src/themes/base/$COMPONENT-parameters.css` contains CSS custom property definitions for components
-   - `node_modules/@ui5/*/src/themes/$THEME/$COMPONENT-parameters.css` contains theme-dependent values for the custom property definitions from `base/` (see above)
+   - `$THIS/node_modules/@ui5/*/src/themes/$COMPONENT.css` contains theme-independent component skeleton CSS, using parameters from theming-base-content as CSS custom properties, as well as CSS custom properties defined in `base/` (see below)
+   - `$THIS/node_modules/@ui5/*/src/themes/base/$COMPONENT-parameters.css` contains CSS custom property definitions for components; never report those UI5 Web Components-specific internal CSS custom properties.
+   - `$THIS/node_modules/@ui5/*/src/themes/$THEME/$COMPONENT-parameters.css` contains theme-dependent values for the custom property definitions from `base/` (see above)
 - **Fundamental Styles:**
-   - `node_modules/fundamental-styles/dist/*.css` contains theme-independent component skeleton CSS, using parameters from theming-base-content as CSS custom properties, as well as CSS custom properties defined in `theming/` (see below)
-   - `node_modules/fundamental-styles/dist/theming/$THEME.css` contains theme-dependent values for the custom property definitions used in `dist/*.css` (see above)
-   - `node_modules/@fundamental-styles/common-css/dist/*.css` theme-independent helper CSS, using parameters from theming-base-content as CSS custom properties
+   - `$THIS/node_modules/fundamental-styles/dist/*.css` contains theme-independent component skeleton CSS, using parameters from theming-base-content as CSS custom properties, as well as CSS custom properties defined in `theming/` (see below)
+   - `$THIS/node_modules/fundamental-styles/dist/theming/$THEME.css` contains theme-dependent values for the custom property definitions used in `dist/*.css` (see above); never report those Fundamental Styles-specific internal CSS custom properties
+   - `$THIS/node_modules/@fundamental-styles/common-css/dist/*.css` theme-independent helper CSS, using parameters from theming-base-content as CSS custom properties
 - **Base:** (with `$LIBRARY` being e.g. `baseLib`, and `$THEME` being e.g. `sap_horizon`)
-   - `node_modules/@sap-theming/theming-base-content/content` is a theme repository as described in https://raw.githubusercontent.com/SAP-docs/btp-ui-theme-designer/main/docs/cf/About-Themes/overview-of-sap-theming-content-91ebfe2.md, containing `Base/`; used by all UI technologies
-   - `node_modules/@sap-theming/theming-base-content/content/Base/.theming` contains metadata about the `Base` framework
-   - `node_modules/@sap-theming/theming-base-content/content/Base/$LIBRARY/.theming` contains metadata about libraries
-   - `node_modules/@sap-theming/theming-base-content/content/Base/$LIBRARY/$THEME/.theming` contains metadata about themes
+   - `$THIS/node_modules/@sap-theming/theming-base-content/content` is a theme repository as described in https://raw.githubusercontent.com/SAP-docs/btp-ui-theme-designer/main/docs/cf/About-Themes/overview-of-sap-theming-content-91ebfe2.md, containing `Base/`; used by all frameworks
+   - `$THIS/node_modules/@sap-theming/theming-base-content/content/Base/.theming` contains metadata about the `Base` framework
+   - `$THIS/node_modules/@sap-theming/theming-base-content/content/Base/$LIBRARY/.theming` contains metadata about libraries
+   - `$THIS/node_modules/@sap-theming/theming-base-content/content/Base/$LIBRARY/$THEME/.theming` contains metadata about themes
    - Metadata includes
+      - `sEntity`: "Framework", "Library" or "Theme"
+      - `sType` (for themes): "STANDARD" (= single theme) or "SET" (= no CSS, just references to different themes of `sType=STANDARD`)
       - `aFiles`: LESS source files
       - `aBuildFiles`: CSS files built from `aFiles`
       - `*sBase{Library,Theme,File}Id`: ID of the most important library/theme/file
       - `oExtends`: the `$FRAMEWORK[.$LIBRARY[.$THEME[.$FILE]]]` "object path" of the parent entity
       - `sSourcePathPattern`: pattern to resolve object paths to file paths
-      - (optionally) `bIgnore=true`: entity is ignored from theming
+      - (optional) `bIgnore=true`: entity is ignored from theming
 
 ## Procedure
 
-1. Determine the SAP theme the users question targets, present the available theme IDs from `node_modules/@sap-theming/theming-base-content/content/Base/baseLib` as select options if unclear, default to `sap_horizon`
-2. Determine the framework the user's question targets. Present the UI technologies from "Context" as select options if unclear, applying these defaults:
-   - **Specific component, no framework stated** → default to _UI5 Web Components_:
-     1. Search _UI5 Web Components_ for a CSS file matching the component name
-     2. **If found:** use it as the primary source; additionally search _Base_ for parameters matching `sap<ComponentName>_*`; report any such parameters not already referenced in the _UI5 Web Components_ CSS as supplementary, labelled "defined in theming-base-content, not yet referenced in webcomponents CSS" (covers new or not-yet-wired parameters); report only _Base_ parameters — do not surface internal _UI5 Web Components_ CSS custom properties
-     3. **If not found in _UI5 Web Components_:** fall back to _Base_ parameters containing the component name as the sole source
-   - **No specific component** → default to _Base_
+1. Determine the SAP theme the users question targets, present the available theme IDs from `$THIS/node_modules/@sap-theming/theming-base-content/content/Base/baseLib` as select options if unclear, default to `sap_horizon`
+2. Determine the framework the user's question targets. Present the frameworks from "Context" as select options if unclear, applying these defaults:
+   1. **framework stated:** use that
+   2. **component stated, no framework:**
+      1. search _UI5 Web Components_ for a CSS file for the component; if found use _UI5 Web Components_ as primary source
+      2. additionally search _Base_ for parameters matching `sap$COMPONENT_*`: report any such parameters not already referenced in _UI5 Web Components_ as supplementary, labelled "defined in theming-base-content, not yet referenced in UI5 Web Components CSS"
+   3. **no component, no framework:** use _Base_
 3. Read the `.theming` file of the framework the users question targets, determine `sBaseLibraryId` and `sSourcePathPattern`
 4. Read the `.theming` file of the theme of the `sBaseLibrary` of the framework the users question targets, based on `sSourcePathPattern` of the frameworks `.theming` file
 5. While there is an `oExtends`:
