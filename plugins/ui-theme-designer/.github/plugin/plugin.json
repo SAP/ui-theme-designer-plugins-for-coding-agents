@@ -21,8 +21,8 @@
         "plugin"
     ],
     "skills": [
-        "./skills/help",
-        "./skills/design-tokens"
+        "./skills/ui-theme-designer-help",
+        "./skills/ui-theme-designer-design-tokens"
     ],
     "source": {
         "source": "github",

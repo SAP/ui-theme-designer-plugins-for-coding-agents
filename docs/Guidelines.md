@@ -23,5 +23,5 @@ type(scope): Description
 ````
 
 - required: every commit message has to start with a lowercase `type`. Common types: `feat`, `fix`, `perf`, `refactor`, `docs`, `test`, `build`, `ci`, `chore`, `deps`, `style`, `revert`.
-- optional: the `scope` is typically the affected plugin or skill (e.g. `ui-theme-designer`, `help`, `design-tokens`). If multiple are affected, skip it or define a meaningful abstract scope.
+- optional: the `scope` is typically the affected plugin or skill (e.g. `ui-theme-designer`, `ui-theme-designer-help`, `ui-theme-designer-design-tokens`). If multiple are affected, skip it or define a meaningful abstract scope.
 - required: the `description` has to follow the Sentence Case style. Only the first word and proper nouns are written in uppercase.

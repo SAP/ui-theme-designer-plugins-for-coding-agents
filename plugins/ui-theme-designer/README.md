@@ -6,7 +6,7 @@ General plugin for coding agents working with the UI theme designer [SAP Help pa
 
 ### 📋 Skills
 
-#### help
+#### ui-theme-designer-help
 
 Answers how-to get started with UI theme designer and conceptual questions about UI theme designer on BTP:
 
@@ -17,7 +17,7 @@ Answers how-to get started with UI theme designer and conceptual questions about
 - Integration with SAP Build Work Zone, S/4HANA, SAPUI5, SAP GUI
 - Troubleshooting and error messages
 
-#### design-tokens
+#### ui-theme-designer-design-tokens
 
 Answers questions about the SAP Design System and SAP Fiori design tokens:
 
