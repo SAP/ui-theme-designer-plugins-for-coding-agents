@@ -1,11 +1,5 @@
 .DS_Store
-
-# Per-skill runtime artifacts (cloned/fetched on first use by SKILL.md)
-plugins/*/skills/*/theming-base-content/
-plugins/*/skills/*/openui5/
-plugins/*/skills/*/webcomponents/
-plugins/*/skills/*/fundamental-styles/
-plugins/*/skills/*/overview-of-sap-theming-content-*.md
+node_modules/
 
 # Eval working dirs
 plugins/*/skills/*-workspace/
