@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.0.0](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/compare/v1.2.1...v2.0.0) (2026-07-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* Prefix skill names with ui-theme-designer- ([#26](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/issues/26))
+
+### Bug Fixes
+
+* Prefix skill names with ui-theme-designer- ([#26](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/issues/26)) ([561a848](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/commit/561a84841d3288b77ac3504bce9fbac243633f63))
+* **ui-theme-designer-design-tokens:** Fetch qualified dependencies with npm ci ([#28](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/issues/28)) ([aac2c26](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/commit/aac2c263175e95325c29b3343917fe2bd145bdb5))
+* **ui-theme-designer-help:** Fetch qualified help from help.sap.com HTTP API ([#29](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/issues/29)) ([4e96972](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/commit/4e96972))
+
 ## [1.2.1](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/compare/v1.2.0...v1.2.1) (2026-07-06)
 
 
