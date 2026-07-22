@@ -27,13 +27,13 @@ Answers questions about the SAP Design System and SAP Fiori design tokens:
 
 ## Installation
 
-### Via Claude CLI (coming soon)
+### Via Claude CLI
 
 ```bash
 claude plugin install ui-theme-designer@claude-plugins-official
 ```
 
-### In Claude Code (coming soon)
+### In Claude Code
 
 ```
 /plugin install ui-theme-designer@claude-plugins-official
