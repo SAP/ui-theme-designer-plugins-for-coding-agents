@@ -41,7 +41,7 @@ claude plugin install ui-theme-designer@claude-plugins-official
 
 ### In GitHub Copilot
 
-[Install in VS Code](vscode://chat-plugin/install?source=SAP%2Fui-theme-designer-plugins-for-coding-agents) or visit the plugin page in [Awesome GitHub Copilot marketplace](https://awesome-copilot.github.com/plugin/ui-theme-designer/).
+<a href="vscode://chat-plugin/install?source=SAP%2Fui-theme-designer-plugins-for-coding-agents">Install in VS Code</a> or visit the plugin page in [Awesome GitHub Copilot marketplace](https://awesome-copilot.github.com/plugin/ui-theme-designer/).
 
 ## Installing Skills Only
 
