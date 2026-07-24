@@ -33,7 +33,7 @@ Answers questions about the SAP Design System and SAP Fiori design tokens:
 claude plugin install ui-theme-designer@claude-plugins-official
 ```
 
-See [Claude by Anthropic: ui-theme-designer Plugin](https://claude.com/plugins/ui-theme-designer).
+See [Claude by Anthropic: ui-theme-designer](https://claude.com/plugins/ui-theme-designer).
 
 ### For GitHub Copilot
 
