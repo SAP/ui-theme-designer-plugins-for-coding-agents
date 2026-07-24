@@ -27,23 +27,23 @@ Answers questions about the SAP Design System and SAP Fiori design tokens:
 
 ## Installation
 
-### Via Claude CLI
+### For Claude
 
-```bash
+```sh
 claude plugin install ui-theme-designer@claude-plugins-official
 ```
 
-### In Claude Code
+See [Claude by Anthropic: ui-theme-designer](https://claude.com/plugins/ui-theme-designer).
 
+### For GitHub Copilot
+
+```sh
+copilot plugin instasll ui-theme-designer@awesome-copilot
 ```
-/plugin install ui-theme-designer@claude-plugins-official
-```
 
-### In GitHub Copilot
+See [Awesome GitHub Copilot: ui-theme-designer](https://awesome-copilot.github.com/plugin/ui-theme-designer/).
 
-[Install in VS Code](vscode://chat-plugin/install?source=SAP%2Fui-theme-designer-plugins-for-coding-agents) or visit the plugin page in [Awesome GitHub Copilot marketplace](https://awesome-copilot.github.com/plugin/ui-theme-designer/).
-
-## Installing Skills Only
+### For other coding agents
 
 If your coding agent doesn't support plugins, install the skills directly using the [skills](https://www.npmjs.com/package/skills) package:
 
@@ -51,6 +51,7 @@ If your coding agent doesn't support plugins, install the skills directly using 
 npx skills add SAP/ui-theme-designer-plugins-for-coding-agents
 ```
 
+See [The Agent Skills Directory: SAP/ui-theme-designer-plugins-for-coding-agents](https://www.skills.sh/?q=SAP/ui-theme-designer-plugins-for-coding-agents).
 
 ## Examples
 
