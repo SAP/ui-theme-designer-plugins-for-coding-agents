@@ -38,7 +38,7 @@ See [Claude by Anthropic: ui-theme-designer](https://claude.com/plugins/ui-theme
 ### For GitHub Copilot
 
 ```sh
-copilot plugin instasll ui-theme-designer@awesome-copilot
+copilot plugin install ui-theme-designer@awesome-copilot
 ```
 
 See [Awesome GitHub Copilot: ui-theme-designer](https://awesome-copilot.github.com/plugin/ui-theme-designer/).
