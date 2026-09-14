@@ -20,7 +20,7 @@
         "@openui5/sap.uxap": "^1.149.1",
         "@openui5/themelib_sap_belize": "^1.149.1",
         "@openui5/themelib_sap_fiori_3": "^1.149.1",
-        "@openui5/themelib_sap_horizon": "^1.149.1",
+        "@openui5/themelib_sap_horizon": "^1.152.0",
         "@sap-theming/theming-base-content": "^11.36.4",
         "@ui5/webcomponents": "^2.23.2",
         "@ui5/webcomponents-ai": "^2.23.2",
