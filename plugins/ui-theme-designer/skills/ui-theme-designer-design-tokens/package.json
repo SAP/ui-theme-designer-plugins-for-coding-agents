@@ -26,6 +26,6 @@
         "@ui5/webcomponents-ai": "^2.23.2",
         "@ui5/webcomponents-compat": "^2.23.2",
         "@ui5/webcomponents-fiori": "^2.23.2",
-        "fundamental-styles": "^0.41.7"
+        "fundamental-styles": "^0.41.8"
     }
 }
