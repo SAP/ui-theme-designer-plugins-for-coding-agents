@@ -8,7 +8,7 @@
         "@openui5/sap.ui.commons": "^1.149.1",
         "@openui5/sap.ui.core": "^1.149.1",
         "@openui5/sap.ui.dt": "^1.149.1",
-        "@openui5/sap.ui.fl": "^1.149.1",
+        "@openui5/sap.ui.fl": "^1.152.0",
         "@openui5/sap.ui.integration": "^1.149.1",
         "@openui5/sap.ui.layout": "^1.149.1",
         "@openui5/sap.ui.mdc": "^1.149.1",
