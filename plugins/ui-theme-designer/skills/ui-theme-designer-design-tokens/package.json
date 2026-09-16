@@ -23,7 +23,7 @@
         "@openui5/themelib_sap_horizon": "^1.152.0",
         "@sap-theming/theming-base-content": "^11.36.4",
         "@ui5/webcomponents": "^2.26.0",
-        "@ui5/webcomponents-ai": "^2.23.2",
+        "@ui5/webcomponents-ai": "^2.26.0",
         "@ui5/webcomponents-compat": "^2.23.2",
         "@ui5/webcomponents-fiori": "^2.23.2",
         "fundamental-styles": "^0.41.8"
