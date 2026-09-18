@@ -24,6 +24,7 @@ Answers questions about the SAP Design System and SAP Fiori design tokens:
 - Which themes exist (e.g. `sap_horizon`, `sap_fiori_3`) and what value a parameter has in each
 - How parameters inherit and extend across the theme chain via `.theming` files
 - Which parameters a specific UI component consumes — for [SAPUI5/OpenUI5](https://github.com/UI5/openui5), [UI5 Web Components](https://github.com/UI5/webcomponents), and [Fundamental Styles](https://github.com/SAP/fundamental-styles)
+- Which hard-coded values in your custom CSS can be replaced by theming parameters, so your styles stay in sync with the SAP Design System and adapt to every theme
 
 ## Installation
 
@@ -76,3 +77,50 @@ Examples showing in which situations the UI Theme Designer plugin can help you.
 | Focus ring | `--sapContent_FocusColor`, `--sapContent_FocusWidth`, `--sapContent_FocusStyle` |
 
 You can use this list directly in your CSS, reference it in a feature description ("the ThemeCard should look like standard cards"), or let the agent propose a full CSS implementation based on it.
+
+### Slim Down Your Custom CSS
+
+**Situation:** Custom CSS has a way of piling up hard-coded colors, spacings, and fonts — values that drift out of sync with the SAP Design System and break the moment someone switches themes. Whether you are a frontend developer reusing design tokens in a custom component or a theme creator cleaning up an existing theme, you want to know which of those values could be replaced by a theming parameter.
+
+**Example:** You have a custom card style with hard-coded values and ask:
+
+> _"Review my custom CSS and tell me which values I can replace with SAP theming parameters."_
+
+Given a stylesheet like this:
+
+```css
+.my-card {
+  background: #ffffff;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.15);
+  color: #32363a;
+  font-family: "72", "72full", Arial, Helvetica, sans-serif;
+  padding: 1rem;
+}
+```
+
+**Result:** The agent scans your styles, matches each hard-coded value to the theming parameter that expresses the same intent, and proposes the substitutions:
+
+| Property | Hard-coded value | Suggested parameter |
+|---|---|---|
+| `background` | `#ffffff` | `--sapTile_Background` |
+| `border-color` | `#d9d9d9` | `--sapTile_BorderColor` |
+| `border-radius` | `8px` | `--sapTile_BorderCornerRadius` |
+| `box-shadow` | `0 0 2px 0 rgba(0,0,0,0.15)` | `--sapContent_Shadow0` |
+| `color` | `#32363a` | `--sapGroup_TitleTextColor` |
+| `font-family` | `"72", …` | `--sapFontFamily` |
+
+The result is less custom CSS to maintain, and a component that adapts automatically to every theme instead of fighting against them:
+
+```css
+.my-card {
+  background: var(--sapTile_Background);
+  border: 1px solid var(--sapTile_BorderColor);
+  border-radius: var(--sapTile_BorderCornerRadius);
+  box-shadow: var(--sapContent_Shadow0);
+  color: var(--sapGroup_TitleTextColor);
+  font-family: var(--sapFontFamily);
+  padding: 1rem;
+}
+```
