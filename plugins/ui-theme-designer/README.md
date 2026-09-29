@@ -81,7 +81,7 @@ The `ui-theme-designer-design-tokens` skill does not rely on the agent's trainin
 }}}%%
 sequenceDiagram
     actor U as User
-    participant C as Claude
+    participant C as Agent
     participant S as design-tokens skill
     participant N as node_modules
     participant R as npm registry
