@@ -66,8 +66,8 @@ Design Tokens are defined in LESS files of the theming-base-content, and consume
    3. If an annotation has values for which it also has "anti-values" (the same value but starting with a `!`, e.g. "Protected" and "!Protected"), remove both values from the values list
    4. If an annotation values list is empty, remove the annotation
 9. If the user targets "UI5 Web Components", for each relevant component look up the three CSS sources:
-   1. the theme-independent skeleton at `webcomponents/packages/*/src/themes/<component>.css`, merged with
-   2. the always-used base parameters at `webcomponents/packages/*/src/themes/base/<component>-parameters.css`, then with
-   3. the theme-specific delta at `webcomponents/packages/*/src/themes/<theme>/<component>-parameters.css`
-10. If the user targets "Fundamental Styles", scan `fundamental-styles/packages/*/src/**/*.scss` for the relevant component; theme-specific values come from the CSS custom properties in `theming-base-content/content/Base/baseLib/<theme>/css_variables.css`
+   1. the theme-independent skeleton at `@ui5/*/src/themes/<Component>.css`, merged with
+   2. the always-used base parameters at `@ui5/*/src/themes/base/<Component>-parameters.css`, then with
+   3. the theme-specific delta at `@ui5/*/src/themes/<theme>/<Component>-parameters.css`
+10. If the user targets "Fundamental Styles", scan `fundamental-styles/dist/*.css` for the relevant component; theme-specific values come from the CSS custom properties in `theming-base-content/content/Base/baseLib/<theme>/css_variables.css` (standard `sap*` parameters), merged with `fundamental-styles/dist/theming/<theme>.css` (Fundamental Styles-specific tokens not present in theming-base-content, e.g. `sapMenu_*`, `sapNavigation_*`)
 11. Answer the users question based on the information collected
