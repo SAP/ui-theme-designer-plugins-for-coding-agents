@@ -7,7 +7,6 @@ A collection of plugins for coding agents that provide AI coding assistants with
 
 - [Plugin Overview](#plugin-overview)
 - [Requirements](#requirements)
-- [Further Information](#further-information)
 - [Support, Feedback, Contributing](#support-feedback-contributing)
 - [Security / Disclosure](#security--disclosure)
 - [Code of Conduct](#code-of-conduct)
@@ -20,10 +19,6 @@ A collection of plugins for coding agents that provide AI coding assistants with
 ## Requirements
 
 These plugins are designed for AI coding agents such as [Claude Code](https://code.claude.com/). No additional SAP software installation is required.
-
-## Further Information
-
-- [Claude Code Docs](https://code.claude.com/docs/)
 
 ## Support, Feedback, Contributing
 
