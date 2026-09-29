@@ -102,7 +102,7 @@ sequenceDiagram
     C->>N: Read .theming, walk oExtends chain
     C->>N: Read resolved artifacts<br/>(design-tokens.json / css_variables.css)
     N-->>C: values + type + description
-    C-->>U: Answer (#fff vs #1c242c, grouped)
+    C-->>U: Answer (#35;fff vs #35;1c242c, grouped)
 ```
 
 ## Examples
