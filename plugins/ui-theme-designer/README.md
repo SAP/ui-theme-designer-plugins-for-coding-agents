@@ -24,6 +24,7 @@ Answers questions about the SAP Design System and SAP Fiori design tokens:
 - Which themes exist (e.g. `sap_horizon`, `sap_fiori_3`) and what value a parameter has in each
 - How parameters inherit and extend across the theme chain via `.theming` files
 - Which parameters a specific UI component consumes — for [SAPUI5/OpenUI5](https://github.com/UI5/openui5), [UI5 Web Components](https://github.com/UI5/webcomponents), and [Fundamental Styles](https://github.com/SAP/fundamental-styles)
+- Which hard-coded values in your custom CSS can be replaced by theming parameters, so your styles stay in sync with the SAP Design System and adapt to every theme
 
 ## Installation
 
@@ -76,3 +77,29 @@ Examples showing in which situations the UI Theme Designer plugin can help you.
 | Focus ring | `--sapContent_FocusColor`, `--sapContent_FocusWidth`, `--sapContent_FocusStyle` |
 
 You can use this list directly in your CSS, reference it in a feature description ("the ThemeCard should look like standard cards"), or let the agent propose a full CSS implementation based on it.
+
+### Slim Down Your Custom CSS in existing Custom Themes
+
+**Situation:** Over time, custom themes accumulate custom CSS that targets UI5 (or Unified Rendering) classes — often written to recolor or restyle something that had no theming parameter at the time. But new parameters are added to the SAP Design system over time. Custom CSS that was necessary a year ago may be completely redundant today, and it silently overrides the theme instead of following it. You want to know which of your custom CSS rules can simply be **deleted** because a theming parameter now covers them.
+
+**Example:** Your custom theme contains this CSS, originally added to force the text color of neutral icon tab filters:
+
+```css
+/* Custom CSS */
+.sapMITBTextOnly .sapMITBFilterNeutral .sapMITBText,
+.sapMITBTextOnly .sapMITBFilterNeutral .sapMITBFilterWrapper:hover .sapMITBText,
+.sapMITBTextOnly .sapMITBFilterNeutral .sapMITBFilterExpandBtn:hover .sapMITBFilterExpandIcon,
+.sapMITBTextOnly .sapMITBFilterNeutral.sapMITBSelected .sapMITBFilterExpandBtnSeparator {
+  color: #131e29;
+}
+```
+
+You ask:
+
+> _"Review this custom CSS from my theme. Can I remove any of it because a theming parameter now exists for it?"_
+
+**Result:** The agent recognizes that these classes belong to the UI5 `IconTabBar` and that a dedicated parameter now controls exactly this color:
+
+> Remove these six lines of custom CSS. The neutral icon tab filter text color is now driven by the `sapTab_Neutral_TextColor` theming parameter. Instead of overriding it in custom CSS, set `sapTab_Neutral_TextColor` to `#131e29` in your theme.
+
+The custom CSS could be removed, the color becomes a first-class theme parameter, and it stays consistent across theme updates and inheritance instead of being pinned by a hard-coded override.
