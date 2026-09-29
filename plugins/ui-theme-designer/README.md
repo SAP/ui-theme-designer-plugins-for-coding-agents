@@ -54,6 +54,57 @@ npx skills add SAP/ui-theme-designer-plugins-for-coding-agents
 
 See [The Agent Skills Directory: SAP/ui-theme-designer-plugins-for-coding-agents](https://www.skills.sh/?q=SAP/ui-theme-designer-plugins-for-coding-agents).
 
+## How Does the Design Tokens Skill Work?
+
+The `ui-theme-designer-design-tokens` skill does not rely on the agent's training data for parameter values. Instead, it works against the actual source-of-truth artifacts published on npm. When your question matches one of the skill's triggers, the agent activates the skill and reads its procedure. If the local `node_modules` are missing or older than seven days, the skill runs `npm ci` to pull the current theming base content and framework packages; otherwise it reuses the files already on disk. It then determines the relevant theme (defaulting to `sap_horizon`) and framework (UI5, UI5 Web Components, or the base content), follows the `.theming` inheritance chain via the `oExtends` links, and reads the resolved artifacts — `design-tokens.json` or `css_variables.css`. The answer it returns is grounded in those files, including each parameter's value, type, and description.
+
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {
+  'primaryColor':'#dbeafe',
+  'primaryBorderColor':'#0070f2',
+  'primaryTextColor':'#0a2540',
+  'lineColor':'#2563eb',
+  'actorBkg':'#dbeafe',
+  'actorBorder':'#0070f2',
+  'actorTextColor':'#0a2540',
+  'signalColor':'#2563eb',
+  'signalTextColor':'#0a2540',
+  'labelBoxBkgColor':'#bfdbfe',
+  'labelBoxBorderColor':'#0070f2',
+  'labelTextColor':'#0a2540',
+  'noteBkgColor':'#eef5ff',
+  'noteBorderColor':'#93c5fd',
+  'noteTextColor':'#0a2540',
+  'activationBkgColor':'#bfdbfe',
+  'activationBorderColor':'#0070f2',
+  'fontFamily':'72, Arial, sans-serif'
+}}}%%
+sequenceDiagram
+    actor U as User
+    participant C as Claude
+    participant S as design-tokens skill
+    participant N as node_modules
+    participant R as npm registry
+
+    U->>C: "What value does sapButton_Background<br/>have in sap_horizon vs dark?"
+    C->>C: Match question to skill trigger
+    C->>S: Activate skill, read procedure
+
+    alt node_modules missing or > 7 days old
+        S->>R: npm ci
+        R-->>N: install content + frameworks
+    else fresh install present
+        Note over S,N: skip download — use local files
+    end
+
+    C->>S: Determine theme (default sap_horizon)
+    C->>S: Determine framework (UI5 / Web Components / Base)
+    C->>N: Read .theming, walk oExtends chain
+    C->>N: Read resolved artifacts<br/>(design-tokens.json / css_variables.css)
+    N-->>C: values + type + description
+    C-->>U: Answer (#fff vs #1c242c, grouped)
+```
+
 ## Examples
 
 Examples showing in which situations the UI Theme Designer plugin can help you.
