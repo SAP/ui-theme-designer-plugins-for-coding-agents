@@ -41,6 +41,11 @@ Design Tokens are defined in LESS files of the theming-base-content, and consume
       - `oExtends`: the `$FRAMEWORK[.$LIBRARY[.$THEME[.$FILE]]]` "object path" of the parent entity
       - `sSourcePathPattern`: pattern to resolve object paths to file paths
       - (optional) `bIgnore=true`: entity is ignored from theming
+   - Alongside the LESS sources and `.theming` metadata, a theme dir under `.../baseLib/$THEME/` also ships **fully-resolved** parameter values built from the LESS chain — use these for resolved-value lookups instead of evaluating LESS:
+      - `css_variables.css` — resolved values as CSS custom properties (e.g. `--sapBrandColor: #0070f2;`); **widest theme coverage**, the preferred resolved-value source
+      - `less_variables.less` — the same resolved values as LESS variables (e.g. `@sapBrandColor: #0070f2;`)
+      - `variables.json` — the same resolved values as JSON (e.g. `"sapBrandColor": "#0070f2"`)
+      - `design-tokens.json` — a token's `type`, `description`, and derivation graph **only**; its color `value` fields are HSLA references (e.g. `hsla({Main._sapBrandColorH}, …)`), **not** final values — not a resolved-value source
 
 ## Procedure
 
@@ -56,8 +61,8 @@ Design Tokens are defined in LESS files of the theming-base-content, and consume
 5. While there is an `oExtends`:
    1. Read the `.theming` file of the theme referenced by `oExtends`; if you haven't encountered the framework (the first section of the Object Path) before, read the framework `.theming` first to determine its `sSourcePathPattern`
    2. Merge the `.theming` JSON with what you already have from the theme `.theming` files: if a key already exists, leave it untouched; add key+value if the key does not yet exist
-6. Read the `${sBaseFileId}.less` file (`sBaseFileId` comes from the merged `.theming` files) of the theme of the `sBaseLibrary` of the framework the users question targets
-7. For each LESS `@import` statement, recursively:
+6. If the question only needs the **resolved value** of one or more parameters in the theme (e.g. "what value does `sapButton_Background` have in `sap_horizon`?"), read the theme's flat, pre-resolved artifact from `$THIS/node_modules/@sap-theming/theming-base-content/content/Base/baseLib/<theme>/` and take the value directly — prefer `css_variables.css` (`--sapButton_Background: #fff;`, widest theme coverage), or equivalently `less_variables.less` (`@sapButton_Background: #fff;`) or `variables.json` (`"sapButton_Background": "#fff"`). Do **not** read `design-tokens.json` for values (its color `value` fields are HSLA references such as `hsla({Main._sapBrandColorH}, …)`, not final values). The LESS traversal in steps 7–8 is not needed for a plain value lookup.
+7. Otherwise, when inheritance or annotation semantics are needed, build the merged LESS: read the `${sBaseFileId}.less` file (`sBaseFileId` comes from the merged `.theming` files) of the theme of the `sBaseLibrary` of the framework the users question targets, then for each LESS `@import` statement, recursively:
    1. Read the referenced LESS file
    2. Replace the `@import` statement with the read content
 8. In the merged LESS file, map the lines `// [<Annotation> <required: Value> <optional: More Values>]` that precede parameter definitions to that parameter:
