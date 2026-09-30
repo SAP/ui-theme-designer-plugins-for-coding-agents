@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.0.1](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/compare/v2.0.0...v2.0.1) (2026-09-30)
+
+
+### Bug Fixes
+
+* correct stale component-CSS paths in design-tokens SKILL.md Steps 9-10 ([#57](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/issues/57)) ([f580887](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/commit/f5808874aa5af3b4577c25fd28ace346fab2e854))
+* **deps:** bump fundamental-styles from 0.41.8 to 0.41.9 in /plugins/ui-theme-designer/skills/ui-theme-designer-design-tokens in the all-non-major group ([#52](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/issues/52)) ([3b64639](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/commit/3b64639e31b03ff27fc3f4374757eac134324444))
+* **deps:** bump the all-non-major group in /plugins/ui-theme-designer/skills/ui-theme-designer-design-tokens with 14 updates ([#50](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/issues/50)) ([04a0a21](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/commit/04a0a217e129422f8a995c5a9dd31712e5a32f47))
+* grant Glob and Grep in allowed-tools for search steps ([#56](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/issues/56)) ([19e54ee](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/commit/19e54eebd6c5083456b71efc667f487c7fb440c3))
+
 ## [2.0.0](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/compare/v1.2.1...v2.0.0) (2026-07-10)
 
 
