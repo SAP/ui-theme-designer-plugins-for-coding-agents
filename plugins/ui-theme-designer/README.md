@@ -1,30 +1,40 @@
 # UI Theme Designer Plugin
 
-General plugin for coding agents working with the UI theme designer [SAP Help pages](https://help.sap.com/docs/btp/sap-business-technology-platform/sap-ui-theme-designer) and the SAP Design System — including [SAP Fiori design tokens](https://github.com/SAP/theming-base-content).
+Plugin for coding agents working with the [SAP UI Theme Designer](https://help.sap.com/docs/btp/sap-business-technology-platform/sap-ui-theme-designer) on SAP BTP and the [SAP Fiori design token system](https://github.com/SAP/theming-base-content).
 
-## Key Features
+The SAP Design System is implemented as a two-layer architecture: **design tokens** (LESS/CSS custom properties in [`@sap-theming/theming-base-content`](https://www.npmjs.com/package/@sap-theming/theming-base-content)) that are consumed by **UI framework components** ([SAPUI5/OpenUI5](https://github.com/SAP/openui5), [UI5 Web Components](https://github.com/SAP/ui5-webcomponents), [Fundamental Styles](https://github.com/SAP/fundamental-styles)). Working across this stack without tooling means grepping multiple npm packages, tracing LESS inheritance chains through `.theming` JSON files, and cross-referencing live SAP Help documentation — all manually. This plugin automates that.
 
-### 📋 Skills
+## Skills
 
-#### ui-theme-designer-help
+### `ui-theme-designer-design-tokens`
 
-Answers how-to get started with UI theme designer and conceptual questions about UI theme designer on BTP:
+Reads the locally installed npm packages of the SAP Design System to answer questions about design tokens and their consumption by UI framework components.
 
-- Initial setup, including user/role management
-- Creating, editing, and publishing themes
-- Quick, detailed, and expert theming workflows
-- Transporting themes, fallback themes, theme sets
-- Integration with SAP Build Work Zone, S/4HANA, SAPUI5, SAP GUI
-- Troubleshooting and error messages
+**What it gives you technically:**
 
-#### ui-theme-designer-design-tokens
+- **Parameter values per theme** — reads `css_variables.css` from `@sap-theming/theming-base-content` for any standard theme (`sap_horizon`, `sap_horizon_dark`, `sap_horizon_hcb`, `sap_fiori_3`, `sap_belize`, …) and returns exact resolved CSS custom property values
+- **Theme inheritance chains** — follows `oExtends` pointers across `.theming` JSON files to reconstruct the full inheritance graph; merges LESS files in inheritance order so you see the effective value at each level
+- **LESS annotation semantics** — parses `// [Tags "..."]` and `// [Protected "..."]` annotations (including anti-values like `// [Protected "!true"]` that cancel parent annotations) to tell you whether a parameter is customer-editable or protected
+- **Cross-framework blast radius** — for a given parameter, finds every component CSS file in UI5 Web Components (`@ui5/webcomponents*/src/themes/*.css`), SAPUI5/OpenUI5 (`@openui5/themelib_*/src/**/*.less`), and Fundamental Styles (`fundamental-styles/dist/*.css`) that references it
+- **Component-to-token reverse lookup** — given a component name, locates its theme-independent CSS skeleton plus its `base/` and `<theme>/` delta files to show exactly which tokens it consumes
 
-Answers questions about the SAP Design System and SAP Fiori design tokens:
+Use this skill when your question is: *"what value does parameter X have"*, *"which components use parameter X"*, *"which parameters control component Y"*, *"what changed between theme A and theme B"*, or *"is parameter X protected from customer overrides"*.
 
-- Which themes exist (e.g. `sap_horizon`, `sap_fiori_3`) and what value a parameter has in each
-- How parameters inherit and extend across the theme chain via `.theming` files
-- Which parameters a specific UI component consumes — for [SAPUI5/OpenUI5](https://github.com/UI5/openui5), [UI5 Web Components](https://github.com/UI5/webcomponents), and [Fundamental Styles](https://github.com/SAP/fundamental-styles)
-- Which hard-coded values in your custom CSS can be replaced by theming parameters, so your styles stay in sync with the SAP Design System and adapt to every theme
+### `ui-theme-designer-help`
+
+Fetches the [UI Theme Designer documentation](https://help.sap.com/docs/btp/sap-business-technology-platform/sap-ui-theme-designer) live from `help.sap.com` via its JSON API and answers questions about how the service works.
+
+**What it gives you technically:**
+
+- **Service configuration** — SAP BTP CF setup, Application Router integration, role collections, service plans and metering
+- **Theme lifecycle** — creating, editing, publishing, transporting (manual ZIP or SAP Content Agent Service + Cloud Transport Management), and deleting themes and theme sets
+- **Theme sets** — how `prefers-color-scheme` / `prefers-contrast` media feature matching selects appearances at runtime; why all referenced themes must be published independently
+- **Integration mechanics** — how to pass `sap-theme=${themeId}@${themeRoot}` to SAPUI5 (URL param, bootstrap, `globalThis["sap-ui-config"]`), the `/themeinfo/v1` and `/themelist/v1` API endpoints for resolving optimized theme roots, self-hosting with `css_variables.css` as the sole required file
+- **Service constraints** — 10 MB ZIP limit, 100 themes per subaccount, 30 req/s rate limit on theming-runtime, 8 req/s on theming-repository, HTTP 429 on breach
+- **Themeable CSS guidance** — modern CSS-only approach (`var(--sap...)`, `@property`, CSS relative colors, container style queries) for custom UI5 controls without a LESS build step
+- **What's new** — fetched live, so answers always reflect the current release
+
+Use this skill when your question is: *"how do I configure X"*, *"what are the limits for Y"*, *"how does Z work in the UI Theme Designer service"*, or *"what does the documentation say about W"*.
 
 ## Installation
 
