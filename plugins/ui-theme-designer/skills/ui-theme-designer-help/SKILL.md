@@ -19,13 +19,20 @@ The UI theme designer documentation is served by `https://help.sap.com` via a JS
 
 ## Procedure
 
-Use `curl -s` to call all API endpoints, and `jq` to parse the JSON responses.
+Use `curl -s` to call all API endpoints, and `jq` to parse the JSON responses. Before using any value from a previous step in a subsequent curl or shell command, **validate it against these patterns** and abort if it does not match:
 
-1. Fetch deliverable metadata to obtain `deliverable_id` and `buildNo`:
+| Field | Pattern |
+|---|---|
+| `id` (deliverable_id) | digits only: `^[0-9]+$` |
+| `buildNo` | digits only: `^[0-9]+$` |
+| `loio` | `^[A-Za-z0-9_.-]+$` |
+| `filePath` | `^[A-Za-z0-9_.-]+$` |
+
+1. Fetch deliverable metadata to obtain `id`, `buildNo` and `filePath`:
    ```sh
    curl -s "https://help.sap.com/http.svc/deliverableMetadata?product_url=btp&deliverable_url=ui-theme-designer&version=LATEST" | jq '{id: .data.deliverable.id, buildNo: .data.deliverable.buildNo, filePath: .data.filePath}'
    ```
-2. Fetch the landing page with `deliverableInfo=1` to get the full TOC tree:
+2. Fetch the landing page with `deliverableInfo=1` to get the full TOC tree (containing one `loio` per title):
    ```sh
    curl -s "https://help.sap.com/http.svc/pagecontent?deliverableInfo=1&deliverable_id={id}&buildNo={buildNo}&file_path={filePath}" | jq '.data.deliverable.fullToc'
    ```
