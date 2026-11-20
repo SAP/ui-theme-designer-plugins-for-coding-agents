@@ -20,13 +20,5 @@
 		"ui5-web-components",
 		"fundamental-styles",
 		"plugin"
-	],
-	"extensions": {
-		"com.github.awesome-copilot": {
-			"skills": [
-				"./skills/ui-theme-designer-help",
-				"./skills/ui-theme-designer-design-tokens"
-			]
-		}
-	}
+	]
 }
