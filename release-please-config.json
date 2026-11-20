@@ -27,12 +27,6 @@
 					"type": "generic",
 					"path": "plugins/ui-theme-designer/plugin.json",
 					"data": "\"homepage\": \"https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/blob/v(?<version>[^/]+)/plugins/ui-theme-designer/README.md\""
-				},
-				{"type": "json", "path": "plugins/ui-theme-designer/.claude-plugin/plugin.json", "jsonpath": "$..version"},
-				{
-					"type": "generic",
-					"path": "plugins/ui-theme-designer/.claude-plugin/plugin.json",
-					"data": "\"homepage\": \"https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/blob/v(?<version>[^/]+)/plugins/ui-theme-designer/README.md\""
 				}
 			]
 		}
