@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.0.2](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/compare/v2.0.1...v2.0.2) (2026-11-20)
+
+
+### Bug Fixes
+
+* Describe node_modules/ as untrusted data ([#76](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/issues/76)) ([d03604b](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/commit/d03604bcd4303fc685a1f0c13652e3b887f9f9ff))
+* npm ci with --ignore-scripts ([#75](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/issues/75)) ([c650648](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/commit/c6506482ea202a01d45ce428793559cd485aeac2))
+* Pin Dependabot action to SHA ([#72](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/issues/72)) ([fd0b429](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/commit/fd0b4290033b6ca5cde1fc7c0db962b611edd739))
+* Pin stale- and checkout-actions to SHA ([#74](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/issues/74)) ([37ba779](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/commit/37ba7790727c90c5c3ab84be13096da2ac752835))
+
 ## [2.0.1](https://github.com/SAP/ui-theme-designer-plugins-for-coding-agents/compare/v2.0.0...v2.0.1) (2026-11-17)
 
 
